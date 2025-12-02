@@ -6,16 +6,10 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Menu, Flame } from "lucide-react";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
-import { useMemo, useState, useEffect } from "react";
+import { useMemo } from "react";
 
 
 export default function AddressPage() {
-  // We use state to ensure the map is only rendered on the client, avoiding SSR issues.
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const Map = useMemo(() => dynamic(
     () => import('@/components/Map'),
@@ -76,7 +70,7 @@ export default function AddressPage() {
           </div>
 
           <div className="mt-8 w-full max-w-4xl h-[400px] rounded-lg overflow-hidden border-4 border-primary/50 shadow-2xl">
-            {isClient ? <Map /> : <div className="h-full w-full bg-muted animate-pulse" />}
+            <Map />
           </div>
         </main>
         
