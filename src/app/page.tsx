@@ -3,6 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Rocket } from "lucide-react";
 
+const menuItems = [
+  { name: 'چای آتیشی', price: '۲۰' },
+  { name: 'املت', price: '۵۰' },
+  { name: 'نیمرو', price: '۴۵' },
+  { name: 'لوبیا', price: '۴۰' },
+  { name: 'عدسی', price: '۴۰' },
+  { name: 'سیب‌زمینی تخم‌مرغ', price: '۵۵' },
+  { name: 'چای و نبات', price: '۲۵' },
+  { name: 'چای و لیمو', price: '۲۵' },
+];
+
+
 export default function Home() {
   return (
     <div
@@ -29,37 +41,29 @@ export default function Home() {
               این یک برنامه آماده PWA است که با Next.js ساخته شده و با Tailwind CSS استایل‌دهی شده است. تمیز، مینیمال و آماده برای ساختن توسط شما.
             </p>
           </div>
+          
+          <Card className="w-full max-w-md mx-auto">
+            <CardHeader>
+              <CardTitle className="text-2xl">منو</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {menuItems.map((item, index) => (
+                  <div key={index} className="flex items-center gap-4 text-lg">
+                    <span className="font-medium">{item.name}</span>
+                    <div className="flex-1 border-b-2 border-dotted border-muted-foreground/50"></div>
+                    <span className="font-semibold text-primary">{item.price}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-xs sm:max-w-md">
             <Button size="lg" className="w-full sm:w-auto">اقدام اصلی</Button>
             <Button size="lg" variant="secondary" className="w-full sm:w-auto">
               اقدام ثانویه
             </Button>
-          </div>
-          <div className="w-full max-w-5xl pt-8">
-            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>آماده برای PWA</CardTitle>
-                  <CardDescription>
-                    به‌صورت پیش‌فرض به‌عنوان یک برنامه وب پیش‌رونده پیکربندی شده است.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">شامل یک فایل مانیفست با نمایش مستقل و URL شروع پیکربندی شده است.</p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle>استایل‌دهی مدرن</CardTitle>
-                  <CardDescription>
-                    با زیبایی‌شناسی تمیز و مینیمال با استفاده از Tailwind CSS و shadcn/ui استایل‌دهی شده است.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">تم سفارشی با پس‌زمینه زغالی تیره و متن طلایی/سفید با کنتراست بالا.</p>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </main>
         <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
