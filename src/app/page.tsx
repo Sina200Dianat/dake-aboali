@@ -1,7 +1,9 @@
 
+'use client';
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Rocket } from "lucide-react";
 
 const menuItems = [
@@ -40,10 +42,24 @@ export default function Home() {
               دکه ابوعلی
             </h1>
           </div>
-          <Button variant="ghost" size="icon">
-            <Menu className="h-6 w-6" />
-            <span className="sr-only">بازکردن منو</span>
-          </Button>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">بازکردن منو</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <div className="flex flex-col p-6">
+                <h2 className="text-2xl font-bold">منو</h2>
+                <nav className="mt-4 flex flex-col gap-4">
+                  <a href="#" className="text-lg font-medium">صفحه اصلی</a>
+                  <a href="#" className="text-lg font-medium">درباره ما</a>
+                  <a href="#" className="text-lg font-medium">تماس با ما</a>
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
         </header>
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
