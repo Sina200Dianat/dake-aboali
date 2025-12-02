@@ -36,6 +36,7 @@ export default function AboutPage() {
                   <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
                   <Link href="/address" className="text-lg font-medium">آدرس</Link>
                   <Link href="/about" className="text-lg font-medium">درباره ما</Link>
+                  <Link href="/admin" className="text-lg font-medium">پنل مدیریت</Link>
                 </nav>
               </div>
             </SheetContent>
@@ -61,8 +62,8 @@ export default function AboutPage() {
               <div className="flex flex-col items-center gap-4 text-lg">
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
                   <a href="https://instagram.com/dake_aboali" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                    <Instagram className="ml-2" />
                     آدرس پیج اینستاگرام
-                    <Instagram className="mr-2" />
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
@@ -73,8 +74,8 @@ export default function AboutPage() {
                 </Button>
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
                   <Link href="/" className="flex items-center justify-center">
+                    <Globe className="ml-2" />
                     آدرس سایت دکه ابوعلی
-                    <Globe className="mr-2" />
                   </Link>
                 </Button>
               </div>

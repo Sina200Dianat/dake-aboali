@@ -46,6 +46,7 @@ export default function AddressPage() {
                   <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
                   <Link href="/address" className="text-lg font-medium">آدرس</Link>
                   <Link href="/about" className="text-lg font-medium">درباره ما</Link>
+                  <Link href="/admin" className="text-lg font-medium">پنل مدیریت</Link>
                 </nav>
               </div>
             </SheetContent>
