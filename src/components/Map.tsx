@@ -31,7 +31,7 @@ const MapComponent = () => {
       }).addTo(map);
 
       L.marker(position).addTo(map)
-        .bindPopup('دکه ابوعلی <br /> خیابان مصلی نژاد، جنب باغ عفیف آباد');
+        .bindPopup('دکه ابوعلی <br /> خیابان مصلی نژاد');
     }
 
     // Cleanup function to run when the component unmounts
