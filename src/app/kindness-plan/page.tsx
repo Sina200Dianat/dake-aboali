@@ -9,11 +9,11 @@ export default function KindnessPlanPage() {
   return (
     <div
       className="flex min-h-screen w-full flex-col bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('https://picsum.photos/seed/mehrabani/1920/1080')" }}
-      data-ai-hint="charity donation"
+      style={{ backgroundImage: "url('https://picsum.photos/seed/hotdrink/1920/1080')" }}
+      data-ai-hint="hot drink"
     >
-      <div className="flex min-h-screen w-full flex-col bg-black/60">
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
+      <div className="flex min-h-screen w-full flex-col bg-black/60 backdrop-blur-sm">
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-transparent px-4 sm:px-6">
           <div className="flex items-center gap-2">
             <Rocket className="h-6 w-6 text-foreground" />
             <h1 className="text-4xl font-bold text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
@@ -74,7 +74,7 @@ export default function KindnessPlanPage() {
           </Card>
         </main>
         
-        <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
+        <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 sm:px-6">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} دکه ابوعلی. تمام حقوق محفوظ است.
           </p>
