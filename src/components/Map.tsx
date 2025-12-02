@@ -1,8 +1,6 @@
-
 'use client';
 
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { useEffect, useRef } from 'react';
 
@@ -18,39 +16,36 @@ L.Icon.Default.mergeOptions({
 
 
 const MapComponent = () => {
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
   const position: L.LatLngExpression = [29.6393, 52.5155]; // Shiraz, Mosalla Nezhad St
-  const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
-    // The cleanup function is the key. When the component unmounts (e.g., due to hot-reloading),
-    // we must properly remove the map instance to prevent initialization errors on remount.
+    // Initialize map only if the container exists and map instance is not already created.
+    if (mapContainerRef.current && !mapInstanceRef.current) {
+      const map = L.map(mapContainerRef.current).setView(position, 16);
+      mapInstanceRef.current = map; // Store instance
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      L.marker(position).addTo(map)
+        .bindPopup('دکه ابوعلی <br /> خیابان مصلی نژاد، جنب باغ عفیف آباد');
+    }
+
+    // Cleanup function to run when the component unmounts
     return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
       }
     };
-  }, []);
+  }, [position]); // Only re-run if position changes
 
 
   return (
-    <MapContainer 
-        center={position} 
-        zoom={16} 
-        scrollWheelZoom={false} 
-        className="h-full w-full"
-        whenCreated={map => (mapRef.current = map)} // Store map instance on creation
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={position}>
-        <Popup>
-          دکه ابوعلی <br /> خیابان مصلی نژاد، جنب باغ عفیف آباد
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div ref={mapContainerRef} className="h-full w-full" />
   );
 };
 
