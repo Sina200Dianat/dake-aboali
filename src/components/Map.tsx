@@ -41,7 +41,7 @@ const MapComponent = () => {
         mapInstanceRef.current = null;
       }
     };
-  }, [position]); // Only re-run if position changes
+  }, []); // Empty dependency array ensures this runs only once on mount
 
 
   return (
