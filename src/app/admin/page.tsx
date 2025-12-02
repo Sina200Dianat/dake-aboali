@@ -85,8 +85,8 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
 
   return (
     <TableRow>
-      <TableCell className="font-medium">{item.name}</TableCell>
-      <TableCell>
+      <TableCell className="font-medium text-right">{item.name}</TableCell>
+      <TableCell className="text-right">
         {isEditing ? (
           <Input
             type="text" // Use text to allow for formatting, but validate for numbers
@@ -99,7 +99,7 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
           <span>{item.price}</span>
         )}
       </TableCell>
-      <TableCell className="flex gap-2">
+      <TableCell className="flex justify-end gap-2">
         {isEditing ? (
           <Button size="sm" onClick={handleSave}>ذخیره</Button>
         ) : (
@@ -216,7 +216,7 @@ export default function AdminPage() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleAddItem} className="space-y-4">
-                <div className="space-y-2">
+                <div className="space-y-2 text-right">
                   <Label htmlFor="itemName">نام آیتم</Label>
                   <Input
                     id="itemName"
@@ -227,7 +227,7 @@ export default function AdminPage() {
                     onChange={(e) => setItemName(e.target.value)}
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 text-right">
                   <Label htmlFor="itemPrice">قیمت آیتم (تومان)</Label>
                   <Input
                     id="itemPrice"
@@ -246,7 +246,7 @@ export default function AdminPage() {
           </Card>
           
           <Card className="w-full max-w-lg bg-card/80 backdrop-blur-sm">
-            <CardHeader>
+            <CardHeader className="text-right">
               <CardTitle>ویرایش منو</CardTitle>
               <CardDescription>لیست آیتم های موجود در منو را ویرایش کنید.</CardDescription>
             </CardHeader>
@@ -257,7 +257,7 @@ export default function AdminPage() {
                     <TableRow>
                       <TableHead className="text-right">نام</TableHead>
                       <TableHead className="text-right">قیمت (تومان)</TableHead>
-                      <TableHead className="text-right">عملیات</TableHead>
+                      <TableHead className="text-left">عملیات</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
