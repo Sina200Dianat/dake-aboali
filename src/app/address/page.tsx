@@ -54,6 +54,7 @@ export default function AddressPage() {
                 <nav className="mt-4 flex flex-col gap-4">
                   <Link href="/" className="text-lg font-medium">خانه</Link>
                   <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
+                  <Link href="/music" className="text-lg font-medium">موزیک های دکه</Link>
                   <Link href="/address" className="text-lg font-medium">آدرس</Link>
                   <Link href="/about" className="text-lg font-medium">درباره ما</Link>
                   <Link href="/admin" className="text-lg font-medium">پنل مدیریت</Link>

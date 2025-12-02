@@ -4,7 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Menu, Flame, Share2 } from "lucide-react";
+import { Menu, Flame, Share2, Music } from "lucide-react";
 import Link from 'next/link';
 import { useToast } from "@/hooks/use-toast";
 
@@ -89,6 +89,7 @@ export default function Home() {
                 <nav className="mt-4 flex flex-col gap-4">
                   <Link href="/" className="text-lg font-medium">خانه</Link>
                   <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
+                  <Link href="/music" className="text-lg font-medium">موزیک های دکه</Link>
                   <Link href="/address" className="text-lg font-medium">آدرس</Link>
                   <Link href="/about" className="text-lg font-medium">درباره ما</Link>
                   <Link href="/admin" className="text-lg font-medium">پنل مدیریت</Link>
@@ -108,7 +109,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-sm sm:max-w-md">
+          <div className="flex flex-wrap justify-center gap-4 w-full max-w-lg">
              <Sheet>
                 <SheetTrigger asChild>
                     <Button size="lg" className="w-full sm:w-auto">منو</Button>
@@ -135,6 +136,12 @@ export default function Home() {
             </Button>
              <Button asChild size="lg" variant="outline" className="w-full sm:w-auto bg-transparent border-primary/50 hover:bg-primary/10">
                 <Link href="/kindness-plan">طرح مهربانی</Link>
+            </Button>
+            <Button asChild size="lg" className="w-full sm:w-auto bg-primary/80 hover:bg-primary">
+                <Link href="/music" className="flex items-center gap-2">
+                    <Music />
+                    موزیک های دکه
+                </Link>
             </Button>
           </div>
         </main>
