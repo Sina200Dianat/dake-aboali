@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket } from "lucide-react";
+import { Menu, Rocket, Instagram, Phone, Globe } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -49,12 +49,37 @@ export default function AboutPage() {
             </h2>
             <div className="text-lg text-foreground/90 leading-relaxed space-y-4">
               <p>
-                در دل شلوغی‌های شهر، جایی که سنت و مدرنیته به هم می‌رسند، «دکه ابوعلی» پناهگاهی گرم برای دوستداران طعم‌های اصیل ایرانی است. ما با الهام از سنت دیرینه نوشیدن «چای آتشی»، فضایی صمیمی و دوستانه را فراهم آورده‌ایم تا لحظاتی سرشار از آرامش و خاطره را برای شما رقم بزنیم.
+                در دل شلوغی‌های شهر، جایی که سنت و مدرنیته به هم می‌رسند، «دکه ابوعلی» پناهگاهی گرم برای دوستداران طعم‌های اصیل ایرانی است. ما با الهام از سنت دیرینه نوشیدن «چای آتشی»، فضایی صمimi و دوستانه را فراهم آورده‌ایم تا لحظاتی سرشار از آرامش و خاطره را برای شما رقم بزنیم.
               </p>
               <p>
                 هر فنجان چای در دکه ما، داستانی از آتش، طبیعت و دورهمی‌های گرم ایرانی را روایت می‌کند. ما باور داریم که یک چای خوب می‌تواند پلی باشد میان نسل‌ها و بهانه‌ای برای گفتگوهای دلنشین. به دکه ابوعلی بیایید و طعم واقعی سنت را در کنار ما تجربه کنید.
               </p>
             </div>
+            
+            <div className="mt-12 pt-8 border-t border-white/10 w-full max-w-md mx-auto space-y-4">
+              <h3 className="text-2xl font-semibold">تماس با ما</h3>
+              <div className="flex flex-col items-center gap-4 text-lg">
+                <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
+                  <a href="https://instagram.com/dake_aboali" target="_blank" rel="noopener noreferrer">
+                    <Instagram className="ml-2" />
+                    آدرس پیج اینستاگرام
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
+                  <a href="tel:+989170000000">
+                    <Phone className="ml-2" />
+                    شماره موبایل موسی محمودی
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
+                  <Link href="/">
+                    <Globe className="ml-2" />
+                    آدرس سایت دکه ابوعلی
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
           </div>
         </main>
         
