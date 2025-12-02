@@ -53,9 +53,10 @@ export default function Home() {
               <div className="flex flex-col p-6">
                 <h2 className="text-2xl font-bold">منو</h2>
                 <nav className="mt-4 flex flex-col gap-4">
-                  <a href="#" className="text-lg font-medium">صفحه اصلی</a>
+                  <a href="#" className="text-lg font-medium">خانه</a>
+                  <a href="#" className="text-lg font-medium">طرح مهربانی</a>
+                  <a href="#" className="text-lg font-medium">آدرس</a>
                   <a href="#" className="text-lg font-medium">درباره ما</a>
-                  <a href="#" className="text-lg font-medium">تماس با ما</a>
                 </nav>
               </div>
             </SheetContent>
