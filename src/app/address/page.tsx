@@ -55,10 +55,10 @@ export default function AddressPage() {
         <main className="flex flex-1 flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              آدرس ما
+              آدرس ما در شیراز
             </h2>
             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-              ما را در این مکان پیدا کنید.
+              ما در خیابان مصلی نژاد، نزدیک باغ عفیف آباد منتظر شما هستیم.
             </p>
           </div>
 

@@ -24,17 +24,17 @@ const defaultIcon = L.icon({
 L.Marker.prototype.options.icon = defaultIcon;
 
 const Map = () => {
-  const position: L.LatLngExpression = [35.7219, 51.3347]; // Default to Tehran
+  const position: L.LatLngExpression = [29.6393, 52.5155]; // Shiraz, Mosalla Nezhad St
 
   return (
-    <MapContainer center={position} zoom={13} scrollWheelZoom={false} className="h-full w-full">
+    <MapContainer center={position} zoom={16} scrollWheelZoom={false} className="h-full w-full">
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={position}>
         <Popup>
-          دکه ابوعلی
+          دکه ابوعلی <br /> خیابان مصلی نژاد، جنب باغ عفیف آباد
         </Popup>
       </Marker>
     </MapContainer>
