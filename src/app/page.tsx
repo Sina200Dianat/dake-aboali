@@ -82,8 +82,10 @@ export default function Home() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-              <div className="flex flex-col p-6">
-                <h2 className="text-2xl font-bold">منو</h2>
+              <SheetHeader>
+                <SheetTitle className="text-2xl font-bold">منو</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col p-6 pt-4">
                 <nav className="mt-4 flex flex-col gap-4">
                   <Link href="/" className="text-lg font-medium">خانه</Link>
                   <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
