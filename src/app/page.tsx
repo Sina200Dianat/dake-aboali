@@ -3,27 +3,27 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket, Share2, Flame, Snowflake } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Menu, Flame, Share2 } from "lucide-react";
 import Link from 'next/link';
 import { useToast } from "@/hooks/use-toast";
 
 const menuItems = [
-  { name: 'چای', price: '50,000', type: 'hot' },
-  { name: 'چای زعفرانی', price: '70,000', type: 'hot' },
-  { name: 'چای ابوعلی', price: '70,000', type: 'hot' },
-  { name: 'دمنوش آرامش', price: '70,000', type: 'hot' },
-  { name: 'چای کرک', price: '110,000', type: 'hot' },
-  { name: 'چای ماسالا', price: '110,000', type: 'hot' },
-  { name: 'کاپوچینو', price: '90,000', type: 'hot' },
-  { name: 'هات چاکلت', price: '90,000', type: 'hot' },
-  { name: 'شیر پسته زعفرانی', price: '110,000', type: 'hot' },
-  { name: 'شیر داغ', price: '65,000', type: 'hot' },
-  { name: 'شیر چای', price: '70,000', type: 'hot' },
+  { name: 'چای', price: '50,000' },
+  { name: 'چای زعفرانی', price: '70,000' },
+  { name: 'چای ابوعلی', price: '70,000' },
+  { name: 'دمنوش آرامش', price: '70,000' },
+  { name: 'چای کرک', price: '110,000' },
+  { name: 'چای ماسالا', price: '110,000' },
+  { name: 'کاپوچینو', price: '90,000' },
+  { name: 'هات چاکلت', price: '90,000' },
+  { name: 'شیر پسته زعفرانی', price: '110,000' },
+  { name: 'شیر داغ', price: '65,000' },
+  { name: 'شیر چای', price: '70,000' },
   { name: 'کلوچه', price: '55,000' },
-  { name: 'قهوه دله', price: '50,000', type: 'hot' },
+  { name: 'قهوه دله', price: '50,000' },
   { name: 'خرما', price: '20,000' },
-  { name: 'ساندویچ سرد', price: '150,000', type: 'cold' },
+  { name: 'ساندویچ سرد', price: '150,000' },
   { name: 'باقلوا', price: '20,000' },
   { name: 'کیک', price: '90,000' },
 ];
@@ -42,7 +42,6 @@ export default function Home() {
         });
         toast({ title: "اشتراک‌گذاری موفق بود!" });
       } catch (error) {
-        // We can ignore the error if the user cancels the share.
         if ((error as Error).name !== 'AbortError') {
             console.error('Error sharing:', error);
             toast({
@@ -70,7 +69,7 @@ export default function Home() {
       <div className="flex min-h-screen w-full flex-col bg-black/60">
         <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
           <div className="flex items-center gap-2">
-            <Rocket className="h-6 w-6 text-foreground" />
+            <Flame className="h-7 w-7 text-primary" />
             <h1 className="text-4xl font-bold text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
               دکه ابوعلی
             </h1>
@@ -96,6 +95,7 @@ export default function Home() {
             </SheetContent>
           </Sheet>
         </header>
+
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -106,36 +106,37 @@ export default function Home() {
             </p>
           </div>
           
-          <Card className="w-full max-w-md mx-auto bg-card/80 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-2xl">منو</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
-                {menuItems.map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 text-lg">
-                    <div className="flex items-center gap-2 flex-shrink-0 text-right">
-                      {item.type === 'hot' && <Flame className="h-5 w-5 text-red-400" />}
-                      {item.type === 'cold' && <Snowflake className="h-5 w-5 text-blue-300" />}
-                      <span className="font-medium">{item.name}</span>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-sm sm:max-w-md">
+             <Sheet>
+                <SheetTrigger asChild>
+                    <Button size="lg" className="w-full sm:w-auto">منو</Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="w-full max-w-full sm:max-w-[500px] h-3/4 mx-auto bg-background/80 backdrop-blur-lg rounded-t-2xl border-t-2 border-primary/50">
+                    <SheetHeader>
+                        <SheetTitle className="text-3xl text-center text-primary">منو</SheetTitle>
+                    </SheetHeader>
+                    <div className="space-y-4 max-h-[calc(100%-4rem)] overflow-y-auto pr-2 mt-4">
+                        {menuItems.map((item, index) => (
+                          <div key={index} className="flex items-center gap-4 text-lg">
+                            <div className="flex items-center gap-2 flex-shrink-0 text-right">
+                              <span className="font-medium">{item.name}</span>
+                            </div>
+                            <div className="flex-1 border-b-2 border-dotted border-muted-foreground/50 mx-2"></div>
+                            <span className="font-semibold text-primary text-left whitespace-nowrap">{item.price} تومان</span>
+                          </div>
+                        ))}
                     </div>
-                    <div className="flex-1 border-b-2 border-dotted border-muted-foreground/50 mx-2"></div>
-                    <span className="font-semibold text-primary text-left whitespace-nowrap">{item.price} تومان</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-xs sm:max-w-md">
-            <Button asChild size="lg" className="w-full sm:w-auto">
-                <Link href="/address">مشاهده آدرس</Link>
-            </Button>
+                </SheetContent>
+            </Sheet>
             <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
-                <Link href="/about">درباره ما</Link>
+                <Link href="/address">آدرس</Link>
+            </Button>
+             <Button asChild size="lg" variant="outline" className="w-full sm:w-auto bg-transparent border-primary/50 hover:bg-primary/10">
+                <Link href="/kindness-plan">طرح مهربانی</Link>
             </Button>
           </div>
         </main>
+        
         <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} دکه ابوعلی. تمام حقوق محفوظ است.

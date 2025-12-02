@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket, PlusCircle, Edit, Trash2 } from "lucide-react";
+import { Menu, Flame, PlusCircle, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useToast } from '@/hooks/use-toast';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -178,7 +178,7 @@ export default function AdminPage() {
       <div className="flex min-h-screen w-full flex-col bg-black/60 backdrop-blur-sm">
         <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-transparent px-4 sm:px-6">
           <div className="flex items-center gap-2">
-            <Rocket className="h-6 w-6 text-foreground" />
+            <Flame className="h-7 w-7 text-primary" />
             <h1 className="text-4xl font-bold text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
               دکه ابوعلی
             </h1>
