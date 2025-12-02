@@ -9,48 +9,48 @@ export default function Home() {
         <div className="flex items-center gap-2">
           <Rocket className="h-6 w-6 text-foreground" />
           <h1 className="text-xl font-bold tracking-tight text-foreground">
-            WebStart
+            وب‌استارت
           </h1>
         </div>
-        <Button>Get Started</Button>
+        <Button>شروع کنید</Button>
       </header>
       <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
         <div className="space-y-4">
           <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-            Your Modern Web App is Ready
+            برنامه وب مدرن شما آماده است
           </h2>
           <p className="mx-auto max-w-[900px] text-muted-foreground md:text-xl">
-            This is a PWA-ready application built with Next.js and styled with Tailwind CSS. It's clean, minimal, and ready for you to build upon.
+            این یک برنامه آماده PWA است که با Next.js ساخته شده و با Tailwind CSS استایل‌دهی شده است. تمیز، مینیمال و آماده برای ساختن توسط شما.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-xs sm:max-w-md">
-          <Button size="lg" className="w-full sm:w-auto">Primary Action</Button>
+          <Button size="lg" className="w-full sm:w-auto">اقدام اصلی</Button>
           <Button size="lg" variant="secondary" className="w-full sm:w-auto">
-            Secondary Action
+            اقدام ثانویه
           </Button>
         </div>
         <div className="w-full max-w-5xl pt-8">
           <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle>PWA Ready</CardTitle>
+                <CardTitle>آماده برای PWA</CardTitle>
                 <CardDescription>
-                  Configured as a Progressive Web App out of the box.
+                  به‌صورت پیش‌فرض به‌عنوان یک برنامه وب پیش‌رونده پیکربندی شده است.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">Includes a manifest file with standalone display and start URL configured.</p>
+                <p className="text-sm text-muted-foreground">شامل یک فایل مانیفست با نمایش مستقل و URL شروع پیکربندی شده است.</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Modern Styling</CardTitle>
+                <CardTitle>استایل‌دهی مدرن</CardTitle>
                 <CardDescription>
-                  Styled with a clean and minimal aesthetic using Tailwind CSS and shadcn/ui.
+                  با زیبایی‌شناسی تمیز و مینیمال با استفاده از Tailwind CSS و shadcn/ui استایل‌دهی شده است.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">Custom theme with deep charcoal and high-contrast gold/off-white text.</p>
+                <p className="text-sm text-muted-foreground">تم سفارشی با پس‌زمینه زغالی تیره و متن طلایی/سفید با کنتراست بالا.</p>
               </CardContent>
             </Card>
           </div>
@@ -58,7 +58,7 @@ export default function Home() {
       </main>
       <footer className="flex h-16 items-center justify-center border-t bg-background px-4 sm:px-6">
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} WebStart. All rights reserved.
+          © {new Date().getFullYear()} وب‌استارت. تمام حقوق محفوظ است.
         </p>
       </footer>
     </div>
