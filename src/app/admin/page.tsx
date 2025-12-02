@@ -7,10 +7,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket, PlusCircle, Edit } from "lucide-react";
+import { Menu, Rocket, PlusCircle, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useToast } from '@/hooks/use-toast';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 const initialMenuItems = [
   { id: 1, name: 'چای', price: '50,000' },
@@ -38,15 +49,13 @@ type MenuItem = {
   price: string;
 };
 
-// Component for a single menu item row with inline editing
-function MenuItemRow({ item, onPriceChange }: { item: MenuItem, onPriceChange: (id: number, newPrice: string) => void }) {
+// Component for a single menu item row with inline editing and deleting
+function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPriceChange: (id: number, newPrice: string) => void, onDelete: (id: number) => void }) {
   const [isEditing, setIsEditing] = useState(false);
   const [price, setPrice] = useState(item.price.replace(/,/g, ''));
   const { toast } = useToast();
 
   const handleSave = () => {
-    // Here you would typically save the change to your backend.
-    // For now, we'll just update the local state and show a toast.
     const formattedPrice = new Intl.NumberFormat('fa-IR').format(Number(price));
     onPriceChange(item.id, formattedPrice);
     setIsEditing(false);
@@ -57,12 +66,20 @@ function MenuItemRow({ item, onPriceChange }: { item: MenuItem, onPriceChange: (
   };
   
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Allow only numbers
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       setPrice(value);
     }
   }
+
+  const handleDelete = () => {
+    onDelete(item.id);
+    toast({
+      variant: "destructive",
+      title: "آیتم حذف شد",
+      description: `${item.name} از منو حذف شد.`,
+    });
+  };
 
   return (
     <TableRow>
@@ -80,7 +97,7 @@ function MenuItemRow({ item, onPriceChange }: { item: MenuItem, onPriceChange: (
           <span>{item.price}</span>
         )}
       </TableCell>
-      <TableCell>
+      <TableCell className="flex gap-2">
         {isEditing ? (
           <Button size="sm" onClick={handleSave}>ذخیره</Button>
         ) : (
@@ -89,6 +106,28 @@ function MenuItemRow({ item, onPriceChange }: { item: MenuItem, onPriceChange: (
             <span className="sr-only">ویرایش قیمت</span>
           </Button>
         )}
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" size="icon" className="h-8 w-8">
+              <Trash2 className="h-4 w-4" />
+              <span className="sr-only">حذف آیتم</span>
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>آیا از حذف این آیتم مطمئن هستید؟</AlertDialogTitle>
+              <AlertDialogDescription>
+                این عمل قابل بازگشت نیست. آیتم "{item.name}" برای همیشه حذف خواهد شد.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>انصراف</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete} className="bg-destructive hover:bg-destructive/90">
+                حذف
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </TableCell>
     </TableRow>
   );
@@ -103,6 +142,7 @@ export default function AdminPage() {
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!itemName || !itemPrice) return;
     const newItem: MenuItem = {
       id: menuItems.length > 0 ? Math.max(...menuItems.map(item => item.id)) + 1 : 1,
       name: itemName,
@@ -119,6 +159,10 @@ export default function AdminPage() {
   
   const handlePriceChange = (id: number, newPrice: string) => {
     setMenuItems(menuItems.map(item => item.id === id ? { ...item, price: newPrice } : item));
+  };
+  
+  const handleDeleteItem = (id: number) => {
+    setMenuItems(menuItems.filter(item => item.id !== id));
   };
 
 
@@ -215,7 +259,7 @@ export default function AdminPage() {
                   </TableHeader>
                   <TableBody>
                     {menuItems.map((item) => (
-                      <MenuItemRow key={item.id} item={item} onPriceChange={handlePriceChange} />
+                      <MenuItemRow key={item.id} item={item} onPriceChange={handlePriceChange} onDelete={handleDeleteItem} />
                     ))}
                   </TableBody>
                 </Table>
