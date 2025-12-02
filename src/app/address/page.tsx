@@ -5,17 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Flame } from "lucide-react";
 import Link from "next/link";
-import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
+import Map from '@/components/Map';
+
 
 export default function AddressPage() {
-  const Map = useMemo(() => dynamic(
-    () => import('@/components/Map'),
-    { 
-      loading: () => <div className="h-[400px] w-full bg-muted animate-pulse rounded-lg" />,
-      ssr: false
-    }
-  ), []);
 
   return (
     <div
