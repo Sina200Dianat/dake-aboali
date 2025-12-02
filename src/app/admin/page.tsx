@@ -7,48 +7,120 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket, PlusCircle } from "lucide-react";
+import { Menu, Rocket, PlusCircle, Edit } from "lucide-react";
 import Link from "next/link";
 import { useToast } from '@/hooks/use-toast';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-const menuItems = [
-  { name: 'چای', price: '50,000' },
-  { name: 'چای زعفرانی', price: '70,000' },
-  { name: 'چای ابوعلی', price: '70,000' },
-  { name: 'دمنوش آرامش', price: '70,000' },
-  { name: 'چای کرک', price: '110,000' },
-  { name: 'چای ماسالا', price: '110,000' },
-  { name: 'کاپوچینو', price: '90,000' },
-  { name: 'هات چاکلت', price: '90,000' },
-  { name: 'شیر پسته زعفرانی', price: '110,000' },
-  { name: 'شیر داغ', price: '65,000' },
-  { name: 'شیر چای', price: '70,000' },
-  { name: 'کلوچه', price: '55,000' },
-  { name: 'قهوه دله', price: '50,000' },
-  { name: 'خرما', price: '20,000' },
-  { name: 'ساندویچ سرد', price: '150,000' },
-  { name: 'باقلوا', price: '20,000' },
-  { name: 'کیک', price: '90,000' },
+const initialMenuItems = [
+  { id: 1, name: 'چای', price: '50,000' },
+  { id: 2, name: 'چای زعفرانی', price: '70,000' },
+  { id: 3, name: 'چای ابوعلی', price: '70,000' },
+  { id: 4, name: 'دمنوش آرامش', price: '70,000' },
+  { id: 5, name: 'چای کرک', price: '110,000' },
+  { id: 6, name: 'چای ماسالا', price: '110,000' },
+  { id: 7, name: 'کاپوچینو', price: '90,000' },
+  { id: 8, name: 'هات چاکلت', price: '90,000' },
+  { id: 9, name: 'شیر پسته زعفرانی', price: '110,000' },
+  { id: 10, name: 'شیر داغ', price: '65,000' },
+  { id: 11, name: 'شیر چای', price: '70,000' },
+  { id: 12, name: 'کلوچه', price: '55,000' },
+  { id: 13, name: 'قهوه دله', price: '50,000' },
+  { id: 14, name: 'خرما', price: '20,000' },
+  { id: 15, name: 'ساندویچ سرد', price: '150,000' },
+  { id: 16, name: 'باقلوا', price: '20,000' },
+  { id: 17, name: 'کیک', price: '90,000' },
 ];
+
+type MenuItem = {
+  id: number;
+  name: string;
+  price: string;
+};
+
+// Component for a single menu item row with inline editing
+function MenuItemRow({ item, onPriceChange }: { item: MenuItem, onPriceChange: (id: number, newPrice: string) => void }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [price, setPrice] = useState(item.price.replace(/,/g, ''));
+  const { toast } = useToast();
+
+  const handleSave = () => {
+    // Here you would typically save the change to your backend.
+    // For now, we'll just update the local state and show a toast.
+    const formattedPrice = new Intl.NumberFormat('fa-IR').format(Number(price));
+    onPriceChange(item.id, formattedPrice);
+    setIsEditing(false);
+    toast({
+      title: "قیمت به‌روزرسانی شد",
+      description: `قیمت ${item.name} به ${formattedPrice} تومان تغییر کرد.`,
+    });
+  };
+  
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Allow only numbers
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setPrice(value);
+    }
+  }
+
+  return (
+    <TableRow>
+      <TableCell className="font-medium">{item.name}</TableCell>
+      <TableCell>
+        {isEditing ? (
+          <Input
+            type="text"
+            value={price}
+            onChange={handlePriceChange}
+            className="h-8 max-w-[120px]"
+            dir="ltr"
+          />
+        ) : (
+          <span>{item.price}</span>
+        )}
+      </TableCell>
+      <TableCell>
+        {isEditing ? (
+          <Button size="sm" onClick={handleSave}>ذخیره</Button>
+        ) : (
+          <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => setIsEditing(true)}>
+            <Edit className="h-4 w-4" />
+            <span className="sr-only">ویرایش قیمت</span>
+          </Button>
+        )}
+      </TableCell>
+    </TableRow>
+  );
+}
+
 
 export default function AdminPage() {
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState('');
+  const [menuItems, setMenuItems] = useState(initialMenuItems);
   const { toast } = useToast();
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the form submission,
-    // e.g., send the data to a server or update state.
+    const newItem: MenuItem = {
+      id: menuItems.length > 0 ? Math.max(...menuItems.map(item => item.id)) + 1 : 1,
+      name: itemName,
+      price: new Intl.NumberFormat('fa-IR').format(Number(itemPrice)),
+    };
+    setMenuItems([...menuItems, newItem]);
     toast({
       title: "آیتم اضافه شد",
-      description: `${itemName} با قیمت ${itemPrice} تومان با موفقیت اضافه شد.`,
+      description: `${itemName} با قیمت ${newItem.price} تومان با موفقیت اضافه شد.`,
     });
-    // Clear form fields
     setItemName('');
     setItemPrice('');
   };
+  
+  const handlePriceChange = (id: number, newPrice: string) => {
+    setMenuItems(menuItems.map(item => item.id === id ? { ...item, price: newPrice } : item));
+  };
+
 
   return (
     <div
@@ -128,8 +200,8 @@ export default function AdminPage() {
           
           <Card className="w-full max-w-lg bg-card/80 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>منوی فعلی</CardTitle>
-              <CardDescription>لیست آیتم های موجود در منو.</CardDescription>
+              <CardTitle>ویرایش منو</CardTitle>
+              <CardDescription>لیست آیتم های موجود در منو را ویرایش کنید.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="max-h-[40vh] overflow-y-auto">
@@ -138,14 +210,12 @@ export default function AdminPage() {
                     <TableRow>
                       <TableHead className="text-right">نام</TableHead>
                       <TableHead className="text-right">قیمت (تومان)</TableHead>
+                      <TableHead className="text-right">عملیات</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {menuItems.map((item, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="font-medium">{item.name}</TableCell>
-                        <TableCell>{item.price}</TableCell>
-                      </TableRow>
+                    {menuItems.map((item) => (
+                      <MenuItemRow key={item.id} item={item} onPriceChange={handlePriceChange} />
                     ))}
                   </TableBody>
                 </Table>
