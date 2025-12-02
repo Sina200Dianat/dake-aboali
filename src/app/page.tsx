@@ -29,7 +29,7 @@ const menuItems = [
 
 
 export default function Home() {
-  const glassyButtonClasses = "bg-white/10 backdrop-blur-sm border border-white/20 text-foreground hover:bg-white/20";
+  const glassyButtonClasses = "bg-primary/20 backdrop-blur-sm border border-primary/40 text-foreground hover:bg-primary/30";
   
   // To change the background image, upload your image to the `public/images` folder
   // and then replace the path below with your image's path, for example: '/images/your-background.jpg'
@@ -77,7 +77,7 @@ export default function Home() {
 
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
-            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
+            <h2 className="text-4xl font-bold tracking-tighter text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)] sm:text-5xl">
               به دکه ابوعلی خوش آمدید
             </h2>
             <p className="mx-auto max-w-[900px] text-muted-foreground md:text-lg">
@@ -145,3 +145,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
