@@ -117,7 +117,7 @@ export default function Home() {
                     <SheetHeader>
                         <SheetTitle className="text-3xl text-center text-primary">منو</SheetTitle>
                     </SheetHeader>
-                    <div className="space-y-4 max-h-[calc(100%-4rem)] overflow-y-auto pr-2 mt-4">
+                    <div className="space-y-4 max-h-[calc(100%-4rem)] overflow-y-auto pr-2 mt-4 custom-scrollbar">
                         {menuItems.map((item, index) => (
                           <div key={index} className="flex items-center gap-4 text-lg">
                             <div className="flex items-center gap-2 flex-shrink-0 text-right">
