@@ -6,13 +6,16 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 // This is to fix the default icon issue with webpack
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+// It's a workaround for a known issue with react-leaflet and Next.js
+if (typeof window !== 'undefined') {
+  delete (L.Icon.Default.prototype as any)._getIconUrl;
 
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: '/images/marker-icon-2x.png',
-    iconUrl: '/images/marker-icon.png',
-    shadowUrl: '/images/marker-shadow.png',
-});
+  L.Icon.Default.mergeOptions({
+      iconRetinaUrl: '/images/marker-icon-2x.png',
+      iconUrl: '/images/marker-icon.png',
+      shadowUrl: '/images/marker-shadow.png',
+  });
+}
 
 
 const MapComponent = () => {
