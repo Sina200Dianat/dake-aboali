@@ -101,7 +101,7 @@ function AdminGuestbookPage() {
     [user, firestore]
   );
   
-  const { data: adminData, isLoading: isAdminLoading } = useDoc(adminDocRef);
+  const { data: adminData, isLoading: isAdminLoading, error: adminError } = useDoc(adminDocRef);
   const isAdmin = useMemo(() => !!adminData, [adminData]);
 
   useEffect(() => {
@@ -161,7 +161,7 @@ function AdminGuestbookPage() {
     return <div className="flex items-center justify-center h-screen bg-background"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>;
   }
 
-  if (!user || !isAdmin) {
+  if ((!isUserLoading && !user) || (!isAdminLoading && !isAdmin)) {
     return (
        <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
          <Card className="w-full max-w-sm bg-card/80 backdrop-blur-sm">
@@ -330,5 +330,3 @@ function AdminGuestbookPage() {
 }
 
 export default AdminGuestbookPage;
-
-    
