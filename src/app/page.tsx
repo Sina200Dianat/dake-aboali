@@ -30,11 +30,15 @@ const menuItems = [
 
 export default function Home() {
   const gradientButtonClasses = "bg-gradient-to-b from-primary/80 to-primary text-primary-foreground hover:from-primary/90 hover:to-primary/90";
+  
+  // To change the background image, upload your image to the `public/images` folder
+  // and then replace the path below with your image's path, for example: '/images/your-background.jpg'
+  const backgroundImageUrl = 'https://picsum.photos/seed/chai/1920/1080';
 
   return (
     <div
       className="flex min-h-screen w-full flex-col bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('https://picsum.photos/seed/chai/1920/1080')" }}
+      style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
       data-ai-hint="campfire tea"
     >
       <div className="flex min-h-screen w-full flex-col bg-black/60">
@@ -73,13 +77,13 @@ export default function Home() {
 
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
-            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
+            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
               به دکه ابوعلی خوش آمدید
             </h2>
-            <p className="mx-auto max-w-[900px] text-muted-foreground md:text-xl">
+            <p className="mx-auto max-w-[900px] text-muted-foreground md:text-lg">
               چای آتشی در قلب شیراز
             </p>
-            <p className="mx-auto max-w-[900px] text-muted-foreground/80 md:text-lg">
+            <p className="mx-auto max-w-[900px] text-muted-foreground/80 md:text-base">
               تجربه اصیل چای آتشی و دمنوش‌های گیاهی در فضایی گرم و دوستانه.
             </p>
           </div>
