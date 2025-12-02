@@ -10,6 +10,27 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Rocket, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { useToast } from '@/hooks/use-toast';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
+const menuItems = [
+  { name: 'چای', price: '50,000' },
+  { name: 'چای زعفرانی', price: '70,000' },
+  { name: 'چای ابوعلی', price: '70,000' },
+  { name: 'دمنوش آرامش', price: '70,000' },
+  { name: 'چای کرک', price: '110,000' },
+  { name: 'چای ماسالا', price: '110,000' },
+  { name: 'کاپوچینو', price: '90,000' },
+  { name: 'هات چاکلت', price: '90,000' },
+  { name: 'شیر پسته زعفرانی', price: '110,000' },
+  { name: 'شیر داغ', price: '65,000' },
+  { name: 'شیر چای', price: '70,000' },
+  { name: 'کلوچه', price: '55,000' },
+  { name: 'قهوه دله', price: '50,000' },
+  { name: 'خرما', price: '20,000' },
+  { name: 'ساندویچ سرد', price: '150,000' },
+  { name: 'باقلوا', price: '20,000' },
+  { name: 'کیک', price: '90,000' },
+];
 
 export default function AdminPage() {
   const [itemName, setItemName] = useState('');
@@ -65,7 +86,7 @@ export default function AdminPage() {
           </Sheet>
         </header>
 
-        <main className="flex flex-1 flex-col items-center justify-center p-4">
+        <main className="flex flex-1 flex-col items-center justify-start pt-8 p-4 gap-8">
           <Card className="w-full max-w-sm bg-card/80 backdrop-blur-sm">
             <CardHeader className="text-center">
               <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit">
@@ -104,6 +125,34 @@ export default function AdminPage() {
               </form>
             </CardContent>
           </Card>
+          
+          <Card className="w-full max-w-lg bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle>منوی فعلی</CardTitle>
+              <CardDescription>لیست آیتم های موجود در منو.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="max-h-[40vh] overflow-y-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-right">نام</TableHead>
+                      <TableHead className="text-right">قیمت (تومان)</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {menuItems.map((item, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-medium">{item.name}</TableCell>
+                        <TableCell>{item.price}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+
         </main>
         
         <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 sm:px-6">
