@@ -73,7 +73,7 @@ export default function Home() {
 
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
-            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+            <h2 className="text-5xl font-bold tracking-tighter sm:text-6xl md:text-7xl text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
               به دکه ابوعلی خوش آمدید
             </h2>
             <p className="mx-auto max-w-[900px] text-muted-foreground md:text-xl">
