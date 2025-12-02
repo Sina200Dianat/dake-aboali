@@ -17,6 +17,7 @@ import {
   useFirestore,
   useUser,
   useMemoFirebase,
+  useDoc,
 } from '@/firebase';
 import { Button } from '@/components/ui/button';
 import {
@@ -95,9 +96,13 @@ function AdminGuestbookPage() {
     error: approvedError,
   } = useCollection<Delneveshte>(approvedQuery);
   
-  const isAdminRef = useMemoFirebase(() => user && firestore ? doc(firestore, 'roles_admin', user.uid) : null, [user, firestore]);
-  const { data: isAdminData, isLoading: isAdminLoading } = useCollection(isAdminRef ? query(collection(firestore, 'roles_admin'), where('__name__', '==', isAdminRef.id)) : null);
-  const isAdmin = useMemo(() => isAdminData ? isAdminData.length > 0 : false, [isAdminData]);
+  const adminDocRef = useMemoFirebase(
+    () => (user && firestore ? doc(firestore, 'roles_admin', user.uid) : null),
+    [user, firestore]
+  );
+  
+  const { data: adminData, isLoading: isAdminLoading } = useDoc(adminDocRef);
+  const isAdmin = useMemo(() => !!adminData, [adminData]);
 
   useEffect(() => {
     if (!isUserLoading && !user) {
@@ -325,3 +330,5 @@ function AdminGuestbookPage() {
 }
 
 export default AdminGuestbookPage;
+
+    

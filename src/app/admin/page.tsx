@@ -14,6 +14,7 @@ import {
   useFirestore,
   useUser,
   useMemoFirebase,
+  useDoc,
 } from '@/firebase';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -158,14 +159,14 @@ export default function AdminPage() {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
   
-  const isAdminQuery = useMemoFirebase(() => {
-    if (!user || !firestore) return null;
-    const adminRef = doc(firestore, 'roles_admin', user.uid);
-    return query(collection(firestore, 'roles_admin'), where('__name__', '==', adminRef.id));
-  }, [user, firestore]);
+  const adminDocRef = useMemoFirebase(
+    () => (user && firestore ? doc(firestore, 'roles_admin', user.uid) : null),
+    [user, firestore]
+  );
+  
+  const { data: adminData, isLoading: isAdminLoading } = useDoc(adminDocRef);
+  const isAdmin = useMemo(() => !!adminData, [adminData]);
 
-  const { data: isAdminData, isLoading: isAdminLoading } = useCollection(isAdminQuery);
-  const isAdmin = useMemo(() => isAdminData ? isAdminData.length > 0 : false, [isAdminData]);
 
   useEffect(() => {
     if (!isUserLoading && !user) {
@@ -312,3 +313,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+    
