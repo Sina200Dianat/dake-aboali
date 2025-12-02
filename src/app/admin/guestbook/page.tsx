@@ -114,7 +114,21 @@ function AdminGuestbookPage() {
     event.preventDefault();
     const email = event.currentTarget.email.value;
     const password = event.currentTarget.password.value;
-    initiateEmailSignIn(auth, email, password);
+    initiateEmailSignIn(auth, email, password, (error) => {
+      if (error.code === 'auth/invalid-credential') {
+        toast({
+          variant: 'destructive',
+          title: 'خطا در ورود',
+          description: 'ایمیل یا رمز عبور وارد شده صحیح نمی‌باشد.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'خطا در ورود',
+          description: error.message,
+        });
+      }
+    });
   }
 
   const handleApprove = async (delneveshte: Delneveshte) => {
@@ -330,3 +344,5 @@ function AdminGuestbookPage() {
 }
 
 export default AdminGuestbookPage;
+
+    
