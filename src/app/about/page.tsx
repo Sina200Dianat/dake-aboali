@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Flame, Instagram, Phone, Globe, ExternalLink } from "lucide-react";
+import { Menu, Flame, ExternalLink, Phone } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -35,6 +35,7 @@ export default function AboutPage() {
               <div className="flex flex-col p-6 pt-4">
                 <nav className="mt-4 flex flex-col gap-4">
                   <Link href="/" className="text-lg font-medium">خانه</Link>
+                  <Link href="/guestbook" className="text-lg font-medium">دلنوشته</Link>
                   <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
                   <Link href="/music" className="text-lg font-medium">موزیک های دکه</Link>
                   <Link href="/address" className="text-lg font-medium">آدرس</Link>

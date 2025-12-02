@@ -3,6 +3,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Vazirmatn } from 'next/font/google';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 const vazirmatn = Vazirmatn({ subsets: ['latin'], variable: '--font-vazirmatn' });
 
@@ -24,7 +25,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body className={`${vazirmatn.className} font-body antialiased page-transition`} suppressHydrationWarning>
-        {children}
+        <FirebaseClientProvider>
+          {children}
+        </FirebaseClientProvider>
         <Toaster />
       </body>
     </html>

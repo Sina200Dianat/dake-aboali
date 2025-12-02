@@ -4,9 +4,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Menu, Flame, Share2, Music } from "lucide-react";
+import { Menu, Flame, Music, MessageSquareQuote } from "lucide-react";
 import Link from 'next/link';
-import { useToast } from "@/hooks/use-toast";
 
 const menuItems = [
   { name: 'چای', price: '50,000' },
@@ -30,36 +29,6 @@ const menuItems = [
 
 
 export default function Home() {
-  const { toast } = useToast();
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'دکه ابوعلی | PWA چای آتیشی شیراز',
-          text: 'طعم اصیل چای آتشی در شیراز را با دکه ابوعلی تجربه کنید!',
-          url: window.location.href,
-        });
-        toast({ title: "اشتراک‌گذاری موفق بود!" });
-      } catch (error) {
-        if ((error as Error).name !== 'AbortError') {
-            console.error('Error sharing:', error);
-            toast({
-              variant: "destructive",
-              title: "خطا در اشتراک‌گذاری",
-              description: "مشکلی در هنگام اشتراک‌گذاری پیش آمد.",
-            });
-        }
-      }
-    } else {
-      toast({
-        variant: "destructive",
-        title: "اشتراک‌گذاری پشتیبانی نمی‌شود",
-        description: "مرورگر شما از قابلیت اشتراک‌گذاری پشتیبانی نمی‌کند.",
-      });
-    }
-  };
-
   const gradientButtonClasses = "bg-gradient-to-b from-primary/80 to-primary text-primary-foreground hover:from-primary/90 hover:to-primary/90";
 
   return (
@@ -90,6 +59,7 @@ export default function Home() {
               <div className="flex flex-col p-6 pt-4">
                 <nav className="mt-4 flex flex-col gap-4">
                   <Link href="/" className="text-lg font-medium">خانه</Link>
+                  <Link href="/guestbook" className="text-lg font-medium">دلنوشته</Link>
                   <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
                   <Link href="/music" className="text-lg font-medium">موزیک های دکه</Link>
                   <Link href="/address" className="text-lg font-medium">آدرس</Link>
@@ -155,16 +125,16 @@ export default function Home() {
         </footer>
 
         <Button
-          onClick={handleShare}
+          asChild
           className="fixed bottom-6 left-6 h-16 w-16 rounded-full shadow-lg"
           size="icon"
-          aria-label="اشتراک گذاری"
+          aria-label="ثبت دلنوشته"
         >
-          <Share2 className="h-7 w-7" />
+          <Link href="/guestbook">
+            <MessageSquareQuote className="h-7 w-7" />
+          </Link>
         </Button>
       </div>
     </div>
   );
 }
-
-    
