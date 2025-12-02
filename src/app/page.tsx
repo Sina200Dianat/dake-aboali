@@ -4,14 +4,23 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Rocket } from "lucide-react";
 
 const menuItems = [
-  { name: 'چای آتیشی', price: '۲۰' },
-  { name: 'املت', price: '۵۰' },
-  { name: 'نیمرو', price: '۴۵' },
-  { name: 'لوبیا', price: '۴۰' },
-  { name: 'عدسی', price: '۴۰' },
-  { name: 'سیب‌زمینی تخم‌مرغ', price: '۵۵' },
-  { name: 'چای و نبات', price: '۲۵' },
-  { name: 'چای و لیمو', price: '۲۵' },
+  { name: 'چای', price: '50,000' },
+  { name: 'چای زعفرانی', price: '70,000' },
+  { name: 'چای ابوعلی', price: '70,000' },
+  { name: 'دمنوش آرامش', price: '70,000' },
+  { name: 'چای کرک', price: '110,000' },
+  { name: 'چای ماسالا', price: '110,000' },
+  { name: 'کاپوچینو', price: '90,000' },
+  { name: 'هات چاکلت', price: '90,000' },
+  { name: 'شیر پسته زعفرانی', price: '110,000' },
+  { name: 'شیر داغ', price: '65,000' },
+  { name: 'شیر چای', price: '70,000' },
+  { name: 'کلوچه', price: '55,000' },
+  { name: 'قهوه دله', price: '50,000' },
+  { name: 'خرما', price: '20,000' },
+  { name: 'ساندویچ سرد', price: '150,000' },
+  { name: 'باقلوا', price: '20,000' },
+  { name: 'کیک', price: '90,000' },
 ];
 
 
@@ -42,17 +51,17 @@ export default function Home() {
             </p>
           </div>
           
-          <Card className="w-full max-w-md mx-auto">
+          <Card className="w-full max-w-md mx-auto bg-card/80 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-2xl">منو</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
                 {menuItems.map((item, index) => (
                   <div key={index} className="flex items-center gap-4 text-lg">
-                    <span className="font-medium">{item.name}</span>
-                    <div className="flex-1 border-b-2 border-dotted border-muted-foreground/50"></div>
-                    <span className="font-semibold text-primary">{item.price}</span>
+                    <span className="font-medium text-right flex-shrink-0">{item.name}</span>
+                    <div className="flex-1 border-b-2 border-dotted border-muted-foreground/50 mx-2"></div>
+                    <span className="font-semibold text-primary text-left whitespace-nowrap">{item.price} تومان</span>
                   </div>
                 ))}
               </div>
