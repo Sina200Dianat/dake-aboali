@@ -22,14 +22,8 @@ const MapComponent = () => {
   const mapRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
-    // This effect runs only once on mount to initialize the map
-    if (!mapRef.current) {
-        // The map container div is created by MapContainer, we just need to render it.
-        // The actual map instance is handled by react-leaflet internally.
-    }
-
     // The cleanup function is the key. When the component unmounts (e.g., due to hot-reloading),
-    // we must properly remove the map instance.
+    // we must properly remove the map instance to prevent initialization errors on remount.
     return () => {
       if (mapRef.current) {
         mapRef.current.remove();
@@ -45,7 +39,7 @@ const MapComponent = () => {
         zoom={16} 
         scrollWheelZoom={false} 
         className="h-full w-full"
-        whenCreated={map => (mapRef.current = map)} // Store map instance
+        whenCreated={map => (mapRef.current = map)} // Store map instance on creation
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
