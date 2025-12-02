@@ -7,21 +7,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket, Shield } from "lucide-react";
+import { Menu, Rocket, PlusCircle } from "lucide-react";
 import Link from "next/link";
+import { useToast } from '@/hooks/use-toast';
 
 export default function AdminPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [itemName, setItemName] = useState('');
+  const [itemPrice, setItemPrice] = useState('');
+  const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
-    // Basic client-side check for demonstration
-    if (username === 'admin' && password === 'password') {
-      alert('Login successful!');
-    } else {
-      alert('Invalid credentials.');
-    }
+    // Here you would typically handle the form submission,
+    // e.g., send the data to a server or update state.
+    toast({
+      title: "آیتم اضافه شد",
+      description: `${itemName} با قیمت ${itemPrice} تومان با موفقیت اضافه شد.`,
+    });
+    // Clear form fields
+    setItemName('');
+    setItemPrice('');
   };
 
   return (
@@ -64,37 +69,37 @@ export default function AdminPage() {
           <Card className="w-full max-w-sm bg-card/80 backdrop-blur-sm">
             <CardHeader className="text-center">
               <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit">
-                <Shield className="h-8 w-8 text-primary" />
+                <PlusCircle className="h-8 w-8 text-primary" />
               </div>
-              <CardTitle className="text-2xl mt-4">پنل مدیریت</CardTitle>
-              <CardDescription>برای دسترسی به پنل مدیریت وارد شوید.</CardDescription>
+              <CardTitle className="text-2xl mt-4">اضافه کردن آیتم جدید</CardTitle>
+              <CardDescription>آیتم جدید را به منو اضافه کنید.</CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleLogin} className="space-y-4">
+              <form onSubmit={handleAddItem} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="username">نام کاربری</Label>
+                  <Label htmlFor="itemName">نام آیتم</Label>
                   <Input
-                    id="username"
+                    id="itemName"
                     type="text"
-                    placeholder="admin"
+                    placeholder="مثال: چای مخصوص"
                     required
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    value={itemName}
+                    onChange={(e) => setItemName(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">گذرواژه</Label>
+                  <Label htmlFor="itemPrice">قیمت آیتم (تومان)</Label>
                   <Input
-                    id="password"
-                    type="password"
+                    id="itemPrice"
+                    type="number"
                     required
-                    placeholder="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="مثال: 75000"
+                    value={itemPrice}
+                    onChange={(e) => setItemPrice(e.target.value)}
                   />
                 </div>
                 <Button type="submit" className="w-full">
-                  ورود
+                  اضافه کردن آیتم
                 </Button>
               </form>
             </CardContent>
