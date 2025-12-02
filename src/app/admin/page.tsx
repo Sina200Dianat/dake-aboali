@@ -1,14 +1,26 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
+import {
+  collection,
+  query,
+  where,
+  doc,
+} from 'firebase/firestore';
+import {
+  useCollection,
+  useFirestore,
+  useUser,
+  useMemoFirebase,
+} from '@/firebase';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Flame, PlusCircle, Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Menu, Flame, PlusCircle, Edit, Trash2, Loader2, ShieldAlert } from "lucide-react";
 import { useToast } from '@/hooks/use-toast';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import {
@@ -21,7 +33,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
+import { initiateEmailSignIn, initiateAnonymousSignIn } from '@/firebase/non-blocking-login';
+import { useAuth } from '@/firebase/provider';
+
 
 const initialMenuItems = [
   { id: 1, name: 'چای', price: '50,000' },
@@ -49,14 +64,12 @@ type MenuItem = {
   price: string;
 };
 
-// Component for a single menu item row with inline editing and deleting
 function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPriceChange: (id: number, newPrice: string) => void, onDelete: (id: number) => void }) {
   const [isEditing, setIsEditing] = useState(false);
   const [price, setPrice] = useState(item.price.replace(/,/g, ''));
   const { toast } = useToast();
 
   const handleSave = () => {
-    // Format price with commas for display
     const formattedPrice = new Intl.NumberFormat('fa-IR').format(Number(price));
     onPriceChange(item.id, formattedPrice);
     setIsEditing(false);
@@ -67,7 +80,6 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
   };
   
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Allow only numbers
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       setPrice(value);
@@ -89,7 +101,7 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
       <TableCell className="text-right">
         {isEditing ? (
           <Input
-            type="text" // Use text to allow for formatting, but validate for numbers
+            type="text"
             value={price}
             onChange={handlePriceChange}
             className="h-8 max-w-[120px]"
@@ -136,11 +148,32 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
 }
 
 
-export default function AdminMenuPage() {
+export default function AdminPage() {
   const [itemName, setItemName] = useState('');
   const [itemPrice, setItemPrice] = useState('');
   const [menuItems, setMenuItems] = useState(initialMenuItems);
   const { toast } = useToast();
+  
+  const firestore = useFirestore();
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+  
+  const isAdminRef = useMemoFirebase(() => user && firestore ? doc(firestore, 'roles_admin', user.uid) : null, [user, firestore]);
+  const { data: isAdminData, isLoading: isAdminLoading } = useCollection(isAdminRef ? query(collection(firestore, 'roles_admin'), where('__name__', '==', isAdminRef.id)) : null);
+  const isAdmin = useMemo(() => isAdminData ? isAdminData.length > 0 : false, [isAdminData]);
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      initiateAnonymousSignIn(auth);
+    }
+  }, [isUserLoading, user, auth]);
+  
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const email = event.currentTarget.email.value;
+    const password = event.currentTarget.password.value;
+    initiateEmailSignIn(auth, email, password);
+  }
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
@@ -148,14 +181,13 @@ export default function AdminMenuPage() {
     const newItem: MenuItem = {
       id: menuItems.length > 0 ? Math.max(...menuItems.map(item => item.id)) + 1 : 1,
       name: itemName,
-      price: new Intl.NumberFormat('fa-IR').format(Number(itemPrice)), // Format the price
+      price: new Intl.NumberFormat('fa-IR').format(Number(itemPrice)),
     };
     setMenuItems([...menuItems, newItem]);
     toast({
       title: "آیتم اضافه شد",
       description: `${itemName} با قیمت ${newItem.price} تومان با موفقیت اضافه شد.`,
     });
-    // Reset form fields
     setItemName('');
     setItemPrice('');
   };
@@ -167,6 +199,31 @@ export default function AdminMenuPage() {
   const handleDeleteItem = (id: number) => {
     setMenuItems(menuItems.filter(item => item.id !== id));
   };
+
+  if (isUserLoading || isAdminLoading) {
+    return <div className="flex items-center justify-center h-screen bg-background"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>;
+  }
+
+  if (!user || !isAdmin) {
+    return (
+       <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
+         <Card className="w-full max-w-sm bg-card/80 backdrop-blur-sm">
+           <CardHeader className="text-center">
+              <ShieldAlert className="mx-auto h-12 w-12 text-destructive" />
+             <CardTitle className="text-2xl">دسترسی ادمین لازم است</CardTitle>
+             <CardDescription>برای مدیریت پنل، لطفاً با حساب کاربری ادمین وارد شوید.</CardDescription>
+           </CardHeader>
+           <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+                <Input name="email" type="email" placeholder="ایمیل" required />
+                <Input name="password" type="password" placeholder="رمز عبور" required />
+                <Button type="submit" className="w-full">ورود</Button>
+            </form>
+           </CardContent>
+         </Card>
+       </div>
+    );
+  }
 
 
   return (
@@ -210,70 +267,35 @@ export default function AdminMenuPage() {
         </header>
 
         <main className="flex flex-1 flex-col items-center justify-start pt-8 p-4 gap-8">
-          <Card className="w-full max-w-sm bg-card/80 backdrop-blur-sm">
-            <CardHeader className="text-center">
-              <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit">
-                <PlusCircle className="h-8 w-8 text-primary" />
-              </div>
-              <CardTitle className="text-2xl mt-4">اضافه کردن آیتم جدید</CardTitle>
-              <CardDescription>آیتم جدید را به منو اضافه کنید.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleAddItem} className="space-y-4">
-                <div className="space-y-2 text-right">
-                  <Label htmlFor="itemName">نام آیتم</Label>
-                  <Input
-                    id="itemName"
-                    type="text"
-                    placeholder="مثال: چای مخصوص"
-                    required
-                    value={itemName}
-                    onChange={(e) => setItemName(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2 text-right">
-                  <Label htmlFor="itemPrice">قیمت آیتم (تومان)</Label>
-                  <Input
-                    id="itemPrice"
-                    type="number"
-                    required
-                    placeholder="مثال: 75000"
-                    value={itemPrice}
-                    onChange={(e) => setItemPrice(e.target.value)}
-                  />
-                </div>
-                <Button type="submit" className="w-full">
-                  اضافه کردن آیتم
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-          
-          <Card className="w-full max-w-lg bg-card/80 backdrop-blur-sm">
-            <CardHeader className="text-right">
-              <CardTitle>ویرایش منو</CardTitle>
-              <CardDescription>لیست آیتم های موجود در منو را ویرایش کنید.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="max-h-[40vh] overflow-y-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-right">نام</TableHead>
-                      <TableHead className="text-right">قیمت (تومان)</TableHead>
-                      <TableHead className="text-left">عملیات</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {menuItems.map((item) => (
-                      <MenuItemRow key={item.id} item={item} onPriceChange={handlePriceChange} onDelete={handleDeleteItem} />
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
+           <div className="text-center">
+             <h2 className="text-4xl font-bold">پنل مدیریت</h2>
+             <p className="text-muted-foreground">خوش آمدید! از اینجا می‌توانید بخش‌های مختلف سایت را مدیریت کنید.</p>
+           </div>
 
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+              <Card className="bg-card/80 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle>مدیریت منو</CardTitle>
+                  <CardDescription>آیتم‌های منوی دکه را اضافه، حذف یا ویرایش کنید.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button asChild className="w-full">
+                    <Link href="/admin/menu">رفتن به مدیریت منو</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+              <Card className="bg-card/80 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle>مدیریت دلنوشته‌ها</CardTitle>
+                  <CardDescription>دلنوشته‌های ارسالی کاربران را تایید یا حذف کنید.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button asChild className="w-full">
+                    <Link href="/admin/guestbook">رفتن به مدیریت دلنوشته‌ها</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+           </div>
         </main>
         
         <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 sm:px-6">
@@ -285,3 +307,5 @@ export default function AdminMenuPage() {
     </div>
   );
 }
+
+    

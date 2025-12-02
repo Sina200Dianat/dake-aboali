@@ -1,14 +1,26 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
+import {
+  collection,
+  query,
+  where,
+  doc,
+} from 'firebase/firestore';
+import {
+  useCollection,
+  useFirestore,
+  useUser,
+  useMemoFirebase,
+} from '@/firebase';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Flame, PlusCircle, Edit, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { Menu, Flame, PlusCircle, Edit, Trash2, Loader2, ShieldAlert } from "lucide-react";
 import { useToast } from '@/hooks/use-toast';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import {
@@ -21,7 +33,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
+import { initiateEmailSignIn, initiateAnonymousSignIn } from '@/firebase/non-blocking-login';
+import { useAuth } from '@/firebase/provider';
 
 const initialMenuItems = [
   { id: 1, name: 'چای', price: '50,000' },
@@ -141,6 +155,27 @@ export default function AdminMenuPage() {
   const [itemPrice, setItemPrice] = useState('');
   const [menuItems, setMenuItems] = useState(initialMenuItems);
   const { toast } = useToast();
+  
+  const firestore = useFirestore();
+  const { user, isUserLoading } = useUser();
+  const auth = useAuth();
+  
+  const isAdminRef = useMemoFirebase(() => user && firestore ? doc(firestore, 'roles_admin', user.uid) : null, [user, firestore]);
+  const { data: isAdminData, isLoading: isAdminLoading } = useCollection(isAdminRef ? query(collection(firestore, 'roles_admin'), where('__name__', '==', isAdminRef.id)) : null);
+  const isAdmin = useMemo(() => isAdminData ? isAdminData.length > 0 : false, [isAdminData]);
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      initiateAnonymousSignIn(auth);
+    }
+  }, [isUserLoading, user, auth]);
+  
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const email = event.currentTarget.email.value;
+    const password = event.currentTarget.password.value;
+    initiateEmailSignIn(auth, email, password);
+  }
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
@@ -167,6 +202,31 @@ export default function AdminMenuPage() {
   const handleDeleteItem = (id: number) => {
     setMenuItems(menuItems.filter(item => item.id !== id));
   };
+  
+  if (isUserLoading || isAdminLoading) {
+    return <div className="flex items-center justify-center h-screen bg-background"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>;
+  }
+
+  if (!user || !isAdmin) {
+    return (
+       <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4">
+         <Card className="w-full max-w-sm bg-card/80 backdrop-blur-sm">
+           <CardHeader className="text-center">
+              <ShieldAlert className="mx-auto h-12 w-12 text-destructive" />
+             <CardTitle className="text-2xl">دسترسی ادمین لازم است</CardTitle>
+             <CardDescription>برای مدیریت منو، لطفاً با حساب کاربری ادمین وارد شوید.</CardDescription>
+           </CardHeader>
+           <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+                <Input name="email" type="email" placeholder="ایمیل" required />
+                <Input name="password" type="password" placeholder="رمز عبور" required />
+                <Button type="submit" className="w-full">ورود</Button>
+            </form>
+           </CardContent>
+         </Card>
+       </div>
+    );
+  }
 
 
   return (
@@ -285,3 +345,5 @@ export default function AdminMenuPage() {
     </div>
   );
 }
+
+    
