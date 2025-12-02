@@ -61,10 +61,10 @@ export default function KindnessPlanPage() {
               </p>
               <div className="p-4 rounded-lg bg-muted/50 border border-border">
                 <p dir="ltr" className="text-2xl font-mono tracking-widest text-center text-primary">
-                  6037-9975-9999-9999
+                  6063-7311-8905-8861
                 </p>
                 <p className="mt-2 text-center text-muted-foreground">
-                  به نام ابوعلی
+                  به نام موسی محمودی
                 </p>
               </div>
               <Button size="lg" className="w-full">
