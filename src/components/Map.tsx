@@ -13,16 +13,14 @@ const MapComponent = () => {
     // This is to fix the default icon issue with webpack
     // It's a workaround for a known issue with react-leaflet and Next.js
     // We do it in useEffect to ensure it only runs on the client
-    if (typeof window !== 'undefined') {
-        // @ts-ignore
-        delete L.Icon.Default.prototype._getIconUrl;
+    // @ts-ignore
+    delete L.Icon.Default.prototype._getIconUrl;
 
-        L.Icon.Default.mergeOptions({
-            iconRetinaUrl: '/images/marker-icon-2x.png',
-            iconUrl: '/images/marker-icon.png',
-            shadowUrl: '/images/marker-shadow.png',
-        });
-    }
+    L.Icon.Default.mergeOptions({
+        iconRetinaUrl: '/images/marker-icon-2x.png',
+        iconUrl: '/images/marker-icon.png',
+        shadowUrl: '/images/marker-shadow.png',
+    });
   }, []);
 
   return (
