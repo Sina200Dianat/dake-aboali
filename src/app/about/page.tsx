@@ -60,21 +60,21 @@ export default function AboutPage() {
               <h3 className="text-2xl font-semibold">تماس با ما</h3>
               <div className="flex flex-col items-center gap-4 text-lg">
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
-                  <a href="https://instagram.com/dake_aboali" target="_blank" rel="noopener noreferrer">
-                    <Instagram className="ml-2" />
+                  <a href="https://instagram.com/dake_aboali" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
                     آدرس پیج اینستاگرام
+                    <Instagram className="mr-2" />
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
-                  <a href="tel:+989170000000">
-                    <Phone className="ml-2" />
+                  <a href="tel:+989170000000" className="flex items-center justify-center">
                     شماره موبایل موسی محمودی
+                    <Phone className="mr-2" />
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
-                  <Link href="/">
-                    <Globe className="ml-2" />
+                  <Link href="/" className="flex items-center justify-center">
                     آدرس سایت دکه ابوعلی
+                    <Globe className="mr-2" />
                   </Link>
                 </Button>
               </div>
