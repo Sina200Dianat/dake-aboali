@@ -74,10 +74,13 @@ export default function Home() {
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              چای آتشی در قلب شیراز
+              به دکه ابوعلی خوش آمدید
             </h2>
             <p className="mx-auto max-w-[900px] text-muted-foreground md:text-xl">
-              تجربه اصیل چای آتشی و دمنوش‌های گیاهی در فضایی گرم و دوستانه. به دکه ابوعلی خوش آمدید.
+              چای آتشی در قلب شیراز
+            </p>
+            <p className="mx-auto max-w-[900px] text-muted-foreground/80 md:text-lg">
+              تجربه اصیل چای آتشی و دمنوش‌های گیاهی در فضایی گرم و دوستانه.
             </p>
           </div>
           
