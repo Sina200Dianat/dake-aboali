@@ -158,8 +158,13 @@ export default function AdminPage() {
   const { user, isUserLoading } = useUser();
   const auth = useAuth();
   
-  const isAdminRef = useMemoFirebase(() => user && firestore ? doc(firestore, 'roles_admin', user.uid) : null, [user, firestore]);
-  const { data: isAdminData, isLoading: isAdminLoading } = useCollection(isAdminRef ? query(collection(firestore, 'roles_admin'), where('__name__', '==', isAdminRef.id)) : null);
+  const isAdminQuery = useMemoFirebase(() => {
+    if (!user || !firestore) return null;
+    const adminRef = doc(firestore, 'roles_admin', user.uid);
+    return query(collection(firestore, 'roles_admin'), where('__name__', '==', adminRef.id));
+  }, [user, firestore]);
+
+  const { data: isAdminData, isLoading: isAdminLoading } = useCollection(isAdminQuery);
   const isAdmin = useMemo(() => isAdminData ? isAdminData.length > 0 : false, [isAdminData]);
 
   useEffect(() => {
@@ -307,5 +312,3 @@ export default function AdminPage() {
     </div>
   );
 }
-
-    
