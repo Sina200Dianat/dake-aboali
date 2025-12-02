@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Rocket } from "lucide-react";
+import Link from 'next/link';
 
 const menuItems = [
   { name: 'چای', price: '50,000' },
@@ -53,10 +54,10 @@ export default function Home() {
               <div className="flex flex-col p-6">
                 <h2 className="text-2xl font-bold">منو</h2>
                 <nav className="mt-4 flex flex-col gap-4">
-                  <a href="#" className="text-lg font-medium">خانه</a>
-                  <a href="#" className="text-lg font-medium">طرح مهربانی</a>
-                  <a href="#" className="text-lg font-medium">آدرس</a>
-                  <a href="#" className="text-lg font-medium">درباره ما</a>
+                  <Link href="/" className="text-lg font-medium">خانه</Link>
+                  <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
+                  <Link href="/address" className="text-lg font-medium">آدرس</Link>
+                  <Link href="/about" className="text-lg font-medium">درباره ما</Link>
                 </nav>
               </div>
             </SheetContent>
