@@ -22,7 +22,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#121212" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
-      <body className={`${vazirmatn.className} font-body antialiased`}>
+      <body className={`${vazirmatn.className} font-body antialiased page-transition`}>
         {children}
         <Toaster />
       </body>
