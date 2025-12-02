@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Flame, Instagram, Phone, Globe } from "lucide-react";
+import { Menu, Flame, Instagram, Phone, Globe, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutPage() {
@@ -61,21 +61,21 @@ export default function AboutPage() {
               <h3 className="text-2xl font-semibold">تماس با ما</h3>
               <div className="flex flex-col items-center gap-4 text-lg">
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
-                  <a href="https://instagram.com/dake_aboali" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
-                    <Instagram className="ml-2" />
-                    آدرس پیج اینستاگرام
+                  <a href="https://instagram.com/dake_aboali" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
+                    <ExternalLink className="h-5 w-5" />
+                    <span>آدرس پیج اینستاگرام</span>
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
-                  <a href="tel:+989170000000" className="flex items-center justify-center">
-                    شماره موبایل موسی محمودی
-                    <Phone className="mr-2" />
+                  <a href="tel:+989170000000" className="flex items-center justify-center gap-2">
+                    <span>شماره موبایل موسی محمودی</span>
+                    <Phone />
                   </a>
                 </Button>
                 <Button asChild variant="outline" className="w-full bg-transparent border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground">
-                  <Link href="/" className="flex items-center justify-center">
-                    <Globe className="ml-2" />
-                    آدرس سایت دکه ابوعلی
+                  <Link href="/" className="flex items-center justify-center gap-2">
+                    <ExternalLink className="h-5 w-5" />
+                    <span>آدرس سایت دکه ابوعلی</span>
                   </Link>
                 </Button>
               </div>
@@ -86,7 +86,7 @@ export default function AboutPage() {
         
         <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 sm:px-6">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} دکه ابوعلی. تمام حقوق محفوظ است.
+            © 2024 دکه ابوعلی. تمام حقوق محفوظ است.
           </p>
         </footer>
       </div>

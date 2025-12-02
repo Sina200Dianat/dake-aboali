@@ -139,7 +139,7 @@ export default function Home() {
         
         <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} دکه ابوعلی. تمام حقوق محفوظ است.
+            © 2024 دکه ابوعلی. تمام حقوق محفوظ است.
           </p>
         </footer>
 
