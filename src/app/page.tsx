@@ -4,26 +4,26 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket, Share2 } from "lucide-react";
+import { Menu, Rocket, Share2, Flame, Snowflake } from "lucide-react";
 import Link from 'next/link';
 import { useToast } from "@/hooks/use-toast";
 
 const menuItems = [
-  { name: 'چای', price: '50,000' },
-  { name: 'چای زعفرانی', price: '70,000' },
-  { name: 'چای ابوعلی', price: '70,000' },
-  { name: 'دمنوش آرامش', price: '70,000' },
-  { name: 'چای کرک', price: '110,000' },
-  { name: 'چای ماسالا', price: '110,000' },
-  { name: 'کاپوچینو', price: '90,000' },
-  { name: 'هات چاکلت', price: '90,000' },
-  { name: 'شیر پسته زعفرانی', price: '110,000' },
-  { name: 'شیر داغ', price: '65,000' },
-  { name: 'شیر چای', price: '70,000' },
+  { name: 'چای', price: '50,000', type: 'hot' },
+  { name: 'چای زعفرانی', price: '70,000', type: 'hot' },
+  { name: 'چای ابوعلی', price: '70,000', type: 'hot' },
+  { name: 'دمنوش آرامش', price: '70,000', type: 'hot' },
+  { name: 'چای کرک', price: '110,000', type: 'hot' },
+  { name: 'چای ماسالا', price: '110,000', type: 'hot' },
+  { name: 'کاپوچینو', price: '90,000', type: 'hot' },
+  { name: 'هات چاکلت', price: '90,000', type: 'hot' },
+  { name: 'شیر پسته زعفرانی', price: '110,000', type: 'hot' },
+  { name: 'شیر داغ', price: '65,000', type: 'hot' },
+  { name: 'شیر چای', price: '70,000', type: 'hot' },
   { name: 'کلوچه', price: '55,000' },
-  { name: 'قهوه دله', price: '50,000' },
+  { name: 'قهوه دله', price: '50,000', type: 'hot' },
   { name: 'خرما', price: '20,000' },
-  { name: 'ساندویچ سرد', price: '150,000' },
+  { name: 'ساندویچ سرد', price: '150,000', type: 'cold' },
   { name: 'باقلوا', price: '20,000' },
   { name: 'کیک', price: '90,000' },
 ];
@@ -99,10 +99,10 @@ export default function Home() {
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
             <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              برنامه وب مدرن شما آماده است
+              چای آتشی در قلب شیراز
             </h2>
             <p className="mx-auto max-w-[900px] text-muted-foreground md:text-xl">
-              این یک برنامه آماده PWA است که با Next.js ساخته شده و با Tailwind CSS استایل‌دهی شده است. تمیز، مینیمال و آماده برای ساختن توسط شما.
+              تجربه اصیل چای آتشی و دمنوش‌های گیاهی در فضایی گرم و دوستانه. به دکه ابوعلی خوش آمدید.
             </p>
           </div>
           
@@ -114,7 +114,11 @@ export default function Home() {
               <div className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
                 {menuItems.map((item, index) => (
                   <div key={index} className="flex items-center gap-4 text-lg">
-                    <span className="font-medium text-right flex-shrink-0">{item.name}</span>
+                    <div className="flex items-center gap-2 flex-shrink-0 text-right">
+                      {item.type === 'hot' && <Flame className="h-5 w-5 text-red-400" />}
+                      {item.type === 'cold' && <Snowflake className="h-5 w-5 text-blue-300" />}
+                      <span className="font-medium">{item.name}</span>
+                    </div>
                     <div className="flex-1 border-b-2 border-dotted border-muted-foreground/50 mx-2"></div>
                     <span className="font-semibold text-primary text-left whitespace-nowrap">{item.price} تومان</span>
                   </div>
@@ -124,9 +128,11 @@ export default function Home() {
           </Card>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 w-full max-w-xs sm:max-w-md">
-            <Button size="lg" className="w-full sm:w-auto">اقدام اصلی</Button>
-            <Button size="lg" variant="secondary" className="w-full sm:w-auto">
-              اقدام ثانویه
+            <Button asChild size="lg" className="w-full sm:w-auto">
+                <Link href="/address">مشاهده آدرس</Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto">
+                <Link href="/about">درباره ما</Link>
             </Button>
           </div>
         </main>
