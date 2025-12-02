@@ -1,9 +1,10 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { Vazirmatn } from 'next/font/google';
 
-const vazirmatn = Vazirmatn({ subsets: ['latin'] });
+const vazirmatn = Vazirmatn({ subsets: ['latin'], variable: '--font-vazirmatn' });
 
 export const metadata: Metadata = {
   title: 'دکه ابوعلی | PWA چای آتیشی شیراز',
@@ -17,12 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" dir="rtl" className="dark">
+    <html lang="fa" dir="rtl" className="dark" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#121212" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
-      <body className={`${vazirmatn.className} font-body antialiased page-transition`}>
+      <body className={`${vazirmatn.className} font-body antialiased page-transition`} suppressHydrationWarning>
         {children}
         <Toaster />
       </body>
