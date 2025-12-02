@@ -1,0 +1,114 @@
+/**
+ * Core Philosophy: This ruleset implements a content submission and moderation workflow.
+ * Any user, including anonymous ones, can submit content to a pending queue.
+ * A designated group of 'admin' users can review, approve, and publish this content.
+ * Published content is publicly readable by everyone.
+ *
+ * Data Structure: The data is segregated into three distinct top-level collections
+ * to ensure security and performance:
+ * - /delneveshtes_pending: A "dropbox" for all user-submitted messages awaiting moderation.
+ * - /delneveshtes_approved: A public collection for all messages approved by an admin.
+ * - /roles_admin: A lookup collection where the existence of a document grants a user admin privileges.
+ *
+ * Key Security Decisions:
+ * - Structural Segregation: Using separate collections for pending and approved content
+ *   is a deliberate choice. It prevents unapproved data from ever being listed publicly and
+ *   makes the rules for listing operations simple and secure.
+ * - Role-Based Access Control (RBAC): Admin privileges are managed by the existence of a
+ *   document in the `/roles_admin` collection. This is a highly performant way to check roles.
+ * - Public Submissions: The `/delneveshtes_pending` collection is open for creation by anyone,
+ *   facilitating easy content submission without requiring user accounts. Writes are validated
+ *   to prevent users from self-approving their content.
+ * - Write Operations by Admins Only: All management actions—approving or deleting submissions,
+ *   managing published content, and assigning admin roles—are strictly limited to authenticated admin users.
+ *
+ * Denormalization for Authorization: The primary authorization mechanism is role-based,
+ * using the `/roles_admin` collection as a lookup table. The `isAdmin()` function performs an
+ * `exists()` check against this collection, which is a fast and non-billable read within
+ * security rules when checking a single document.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper Functions
+    /**
+     * Checks if the currently authenticated user has admin privileges.
+     * Admin status is granted if a document with the user's UID exists in the /roles_admin collection.
+     * This is a performant check that does not incur a read charge.
+     */
+    function isAdmin() {
+      return exists(/databases/$(database)/documents/roles_admin/$(request.auth.uid));
+    }
+
+    /**
+     * Validates that a submitted 'delneveshte' is in a valid pending state.
+     * Ensures users cannot self-approve their submissions or set admin-only fields.
+     */
+    function isValidPendingSubmission() {
+      return request.resource.data.approved == false
+        && !('adminId' in request.resource.data)
+        && !('approvalDate' in request.resource.data);
+    }
+
+    /**
+     * Validates that a newly approved 'delneveshte' is in a valid approved state.
+     * Ensures the 'approved' flag is true and the approving admin's ID is set correctly.
+     */
+    function isValidApprovedCreation() {
+      return request.resource.data.approved == true
+        && request.resource.data.adminId == request.auth.uid;
+    }
+
+    /**
+     * @description Rules for the collection of pending 'delneveshte' submissions.
+     * This acts as a public dropbox where anyone can write, but only admins can read or delete.
+     * @path /delneveshtes_pending/{delneveshteId}
+     * @allow (create) An anonymous user submits a new message. The message must have `approved` set to `false`.
+     * @deny (get) A regular user tries to read a pending submission. This is denied to protect privacy.
+     * @deny (create) A user tries to submit a message with `approved: true`. This is rejected by validation.
+     * @principle Implements a secure "write-only" dropbox for public submissions, with moderation access restricted to admins.
+     */
+    match /delneveshtes_pending/{delneveshteId} {
+      allow get: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidPendingSubmission();
+      allow update: if false;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Rules for the collection of approved 'delneveshte' messages.
+     * This collection is publicly readable by everyone, but only admins can add, modify, or remove content.
+     * @path /delneveshtes_approved/{delneveshteId}
+     * @allow (get, list) Any user, signed-in or not, can read and list all approved messages.
+     * @allow (create) An admin creates a new document, effectively publishing a submission. The `approved` flag must be true.
+     * @deny (update) A non-admin user tries to change the text of an approved message.
+     * @principle Enforces a "Public Read with Admin-Only Writes" pattern for published content.
+     */
+    match /delneveshtes_approved/{delneveshteId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isAdmin() && isValidApprovedCreation();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+
+    /**
+     * @description Rules for managing administrator roles.
+     * The existence of a document in this collection grants a user admin privileges across the application.
+     * @path /roles_admin/{adminId}
+     * @allow (create) An existing admin adds a new user's UID to this collection, making them an admin.
+     * @deny (list) A non-admin user tries to list all the admins.
+     * @deny (delete) A non-admin user tries to remove an admin's role document.
+     * @principle Secures a Role-Based Access Control (RBAC) system where only admins can manage other admins.
+     */
+    match /roles_admin/{adminId} {
+      allow get: if isAdmin();
+      allow list: if isAdmin();
+      allow create: if isAdmin();
+      allow update: if isAdmin() && resource != null;
+      allow delete: if isAdmin() && resource != null;
+    }
+  }
+}

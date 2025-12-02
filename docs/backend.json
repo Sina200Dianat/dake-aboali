@@ -1,0 +1,133 @@
+{
+  "entities": {
+    "Delneveshte": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Delneveshte",
+      "type": "object",
+      "description": "Represents a heartfelt message (delneveshte) submitted by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Delneveshte entity."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user submitting the delneveshte."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user submitting the delneveshte."
+        },
+        "message": {
+          "type": "string",
+          "description": "The heartfelt message itself, limited to 60 characters."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "Date and time when the delneveshte was submitted.",
+          "format": "date-time"
+        },
+        "approved": {
+          "type": "boolean",
+          "description": "Indicates whether the delneveshte has been approved by an administrator for publishing."
+        },
+        "approvalDate": {
+          "type": "string",
+          "description": "Date and time when the delneveshte was approved.",
+          "format": "date-time"
+        },
+        "adminId": {
+          "type": "string",
+          "description": "Reference to Admin that approved the Delneveshte. (Relationship: Admin 1:N Delneveshte)"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "message",
+        "submissionDate",
+        "approved"
+      ]
+    },
+    "Admin": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Admin",
+      "type": "object",
+      "description": "Represents an administrator who can approve delneveshtes.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Admin entity."
+        },
+        "username": {
+          "type": "string",
+          "description": "Username of the administrator."
+        }
+      },
+      "required": [
+        "id",
+        "username"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/delneveshtes_pending/{delneveshteId}",
+        "definition": {
+          "entityName": "Delneveshte",
+          "schema": {
+            "$ref": "#/backend/entities/Delneveshte"
+          },
+          "description": "Stores all submitted 'Delneveshte' messages awaiting admin approval. Includes all fields from the Delneveshte schema.",
+          "params": [
+            {
+              "name": "delneveshteId",
+              "description": "Unique identifier for the delneveshte document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/delneveshtes_approved/{delneveshteId}",
+        "definition": {
+          "entityName": "Delneveshte",
+          "schema": {
+            "$ref": "#/backend/entities/Delneveshte"
+          },
+          "description": "Stores 'Delneveshte' messages that have been approved by an administrator for publishing. Includes all fields from the Delneveshte schema, and the denormalized `adminId`.",
+          "params": [
+            {
+              "name": "delneveshteId",
+              "description": "Unique identifier for the delneveshte document."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/roles_admin/{adminId}",
+        "definition": {
+          "entityName": "Admin",
+          "schema": {
+            "$ref": "#/backend/entities/Admin"
+          },
+          "description": "Indicates admin status. Document existence grants admin privileges.",
+          "params": [
+            {
+              "name": "adminId",
+              "description": "The unique identifier of the administrator."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to manage 'Delneveshte' (heartfelt messages) submitted by users and approved by admins. It adheres to the principle of Authorization Independence by storing all necessary authorization information directly within each document. This avoids the need for `get()` calls in security rules, ensuring atomic operations and simplifying debugging. The structure also incorporates structural segregation by using dedicated collections for user submissions and approved messages, enabling secure list operations (QAPs).\n\nSpecifically, the `delneveshtes_pending` collection stores all submitted messages, while the `delneveshtes_approved` collection contains only those messages that have been approved by an administrator. This separation ensures that unapproved messages are not publicly accessible. The `roles_admin` collection facilitates role-based access control, granting admin privileges based on user ID existence within the collection. Denormalization is achieved by including `adminId` inside approved delneveshtes."
+  }
+}
