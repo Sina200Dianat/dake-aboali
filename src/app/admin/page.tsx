@@ -56,6 +56,7 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
   const { toast } = useToast();
 
   const handleSave = () => {
+    // Format price with commas for display
     const formattedPrice = new Intl.NumberFormat('fa-IR').format(Number(price));
     onPriceChange(item.id, formattedPrice);
     setIsEditing(false);
@@ -66,6 +67,7 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
   };
   
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Allow only numbers
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       setPrice(value);
@@ -87,7 +89,7 @@ function MenuItemRow({ item, onPriceChange, onDelete }: { item: MenuItem, onPric
       <TableCell>
         {isEditing ? (
           <Input
-            type="text"
+            type="text" // Use text to allow for formatting, but validate for numbers
             value={price}
             onChange={handlePriceChange}
             className="h-8 max-w-[120px]"
@@ -146,13 +148,14 @@ export default function AdminPage() {
     const newItem: MenuItem = {
       id: menuItems.length > 0 ? Math.max(...menuItems.map(item => item.id)) + 1 : 1,
       name: itemName,
-      price: new Intl.NumberFormat('fa-IR').format(Number(itemPrice)),
+      price: new Intl.NumberFormat('fa-IR').format(Number(itemPrice)), // Format the price
     };
     setMenuItems([...menuItems, newItem]);
     toast({
       title: "آیتم اضافه شد",
       description: `${itemName} با قیمت ${newItem.price} تومان با موفقیت اضافه شد.`,
     });
+    // Reset form fields
     setItemName('');
     setItemPrice('');
   };
