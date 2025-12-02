@@ -14,8 +14,8 @@ export default function Home() {
         <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
           <div className="flex items-center gap-2">
             <Rocket className="h-6 w-6 text-foreground" />
-            <h1 className="text-xl font-bold tracking-tight text-foreground">
-              وب‌استارت
+            <h1 className="text-4xl font-bold text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
+              دکه ابوعلی
             </h1>
           </div>
           <Button>شروع کنید</Button>
@@ -64,7 +64,7 @@ export default function Home() {
         </main>
         <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 backdrop-blur-sm sm:px-6">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} وب‌استارت. تمام حقوق محفوظ است.
+            © {new Date().getFullYear()} دکه ابوعلی. تمام حقوق محفوظ است.
           </p>
         </footer>
       </div>
