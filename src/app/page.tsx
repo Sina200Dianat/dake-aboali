@@ -29,7 +29,7 @@ const menuItems = [
 
 
 export default function Home() {
-  const gradientButtonClasses = "bg-gradient-to-b from-primary/80 to-primary text-primary-foreground hover:from-primary/90 hover:to-primary/90";
+  const glassyButtonClasses = "bg-white/10 backdrop-blur-sm border border-white/20 text-foreground hover:bg-white/20";
   
   // To change the background image, upload your image to the `public/images` folder
   // and then replace the path below with your image's path, for example: '/images/your-background.jpg'
@@ -91,7 +91,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-4 w-full max-w-lg">
              <Sheet>
                 <SheetTrigger asChild>
-                    <Button size="lg" className={`w-full sm:w-auto ${gradientButtonClasses}`}>منو</Button>
+                    <Button size="lg" className={`w-full sm:w-auto ${glassyButtonClasses}`}>منو</Button>
                 </SheetTrigger>
                 <SheetContent side="bottom" className="w-full max-w-full sm:max-w-[500px] h-3/4 mx-auto bg-background/80 backdrop-blur-lg rounded-t-2xl border-t-2 border-primary/50">
                     <SheetHeader>
@@ -110,13 +110,13 @@ export default function Home() {
                     </div>
                 </SheetContent>
             </Sheet>
-            <Button asChild size="lg" className={`w-full sm:w-auto ${gradientButtonClasses}`}>
+            <Button asChild size="lg" className={`w-full sm:w-auto ${glassyButtonClasses}`}>
                 <Link href="/address">آدرس</Link>
             </Button>
-             <Button asChild size="lg" className={`w-full sm:w-auto ${gradientButtonClasses}`}>
+             <Button asChild size="lg" className={`w-full sm:w-auto ${glassyButtonClasses}`}>
                 <Link href="/kindness-plan">طرح مهربانی</Link>
             </Button>
-            <Button asChild size="lg" className={`w-full sm:w-auto ${gradientButtonClasses}`}>
+            <Button asChild size="lg" className={`w-full sm:w-auto ${glassyButtonClasses}`}>
                 <Link href="/music" className="flex items-center gap-2">
                     <Music />
                     موزیک های دکه
