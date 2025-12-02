@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'وب‌استارت',
-  description: 'یک استارتر PWA مدرن.',
+  title: 'دکه ابوعلی | PWA چای آتیشی شیراز',
+  description: 'دکه ابوعلی، تجربه اصیل چای آتشی در شیراز. طعم سنت و صمیمیت را با ما در یک برنامه وب پیش‌رونده (PWA) مدرن تجربه کنید.',
 };
 
 export default function RootLayout({
