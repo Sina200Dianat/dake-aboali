@@ -4,8 +4,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Rocket } from "lucide-react";
+import { Menu, Rocket, Share2 } from "lucide-react";
 import Link from 'next/link';
+import { useToast } from "@/hooks/use-toast";
 
 const menuItems = [
   { name: 'چای', price: '50,000' },
@@ -29,6 +30,37 @@ const menuItems = [
 
 
 export default function Home() {
+  const { toast } = useToast();
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'دکه ابوعلی | PWA چای آتیشی شیراز',
+          text: 'طعم اصیل چای آتشی در شیراز را با دکه ابوعلی تجربه کنید!',
+          url: window.location.href,
+        });
+        toast({ title: "اشتراک‌گذاری موفق بود!" });
+      } catch (error) {
+        // We can ignore the error if the user cancels the share.
+        if ((error as Error).name !== 'AbortError') {
+            console.error('Error sharing:', error);
+            toast({
+              variant: "destructive",
+              title: "خطا در اشتراک‌گذاری",
+              description: "مشکلی در هنگام اشتراک‌گذاری پیش آمد.",
+            });
+        }
+      }
+    } else {
+      toast({
+        variant: "destructive",
+        title: "اشتراک‌گذاری پشتیبانی نمی‌شود",
+        description: "مرورگر شما از قابلیت اشتراک‌گذاری پشتیبانی نمی‌کند.",
+      });
+    }
+  };
+
   return (
     <div
       className="flex min-h-screen w-full flex-col bg-cover bg-center bg-no-repeat"
@@ -103,6 +135,15 @@ export default function Home() {
             © {new Date().getFullYear()} دکه ابوعلی. تمام حقوق محفوظ است.
           </p>
         </footer>
+
+        <Button
+          onClick={handleShare}
+          className="fixed bottom-6 left-6 h-16 w-16 rounded-full shadow-lg"
+          size="icon"
+          aria-label="اشتراک گذاری"
+        >
+          <Share2 className="h-7 w-7" />
+        </Button>
       </div>
     </div>
   );
