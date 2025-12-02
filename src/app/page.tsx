@@ -1,7 +1,8 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Rocket } from "lucide-react";
+import { Menu, Rocket } from "lucide-react";
 
 const menuItems = [
   { name: 'چای', price: '50,000' },
@@ -39,7 +40,10 @@ export default function Home() {
               دکه ابوعلی
             </h1>
           </div>
-          <Button>شروع کنید</Button>
+          <Button variant="ghost" size="icon">
+            <Menu className="h-6 w-6" />
+            <span className="sr-only">بازکردن منو</span>
+          </Button>
         </header>
         <main className="flex flex-1 flex-col items-center justify-center space-y-8 p-4 text-center sm:p-6 md:p-8">
           <div className="space-y-4">
