@@ -1,16 +1,69 @@
 
+'use client';
+
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, Rocket } from "lucide-react";
 import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">درباره ما</h1>
-      <p className="mt-4 text-lg text-muted-foreground">
-        این صفحه درباره ما است.
-      </p>
-      <Link href="/" className="mt-8 text-primary hover:underline">
-        بازگشت به خانه
-      </Link>
-    </main>
+    <div
+      className="flex min-h-screen w-full flex-col bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('https://picsum.photos/seed/tradition/1920/1080')" }}
+      data-ai-hint="tradition warmth"
+    >
+      <div className="flex min-h-screen w-full flex-col bg-black/60 backdrop-blur-sm">
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-transparent px-4 sm:px-6">
+          <div className="flex items-center gap-2">
+            <Rocket className="h-6 w-6 text-foreground" />
+            <h1 className="text-4xl font-bold text-primary [text-shadow:0_0_8px_hsl(var(--primary)/0.5)]">
+              دکه ابوعلی
+            </h1>
+          </div>
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">بازکردن منو</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <div className="flex flex-col p-6">
+                <h2 className="text-2xl font-bold">منو</h2>
+                <nav className="mt-4 flex flex-col gap-4">
+                  <Link href="/" className="text-lg font-medium">خانه</Link>
+                  <Link href="/kindness-plan" className="text-lg font-medium">طرح مهربانی</Link>
+                  <Link href="/address" className="text-lg font-medium">آدرس</Link>
+                  <Link href="/about" className="text-lg font-medium">درباره ما</Link>
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </header>
+
+        <main className="flex flex-1 flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8">
+          <div className="space-y-6 max-w-3xl">
+            <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+              درباره دکه ابوعلی
+            </h2>
+            <div className="text-lg text-foreground/90 leading-relaxed space-y-4">
+              <p>
+                در دل شلوغی‌های شهر، جایی که سنت و مدرنیته به هم می‌رسند، «دکه ابوعلی» پناهگاهی گرم برای دوستداران طعم‌های اصیل ایرانی است. ما با الهام از سنت دیرینه نوشیدن «چای آتشی»، فضایی صمیمی و دوستانه را فراهم آورده‌ایم تا لحظاتی سرشار از آرامش و خاطره را برای شما رقم بزنیم.
+              </p>
+              <p>
+                هر فنجان چای در دکه ما، داستانی از آتش، طبیعت و دورهمی‌های گرم ایرانی را روایت می‌کند. ما باور داریم که یک چای خوب می‌تواند پلی باشد میان نسل‌ها و بهانه‌ای برای گفتگوهای دلنشین. به دکه ابوعلی بیایید و طعم واقعی سنت را در کنار ما تجربه کنید.
+              </p>
+            </div>
+          </div>
+        </main>
+        
+        <footer className="flex h-16 items-center justify-center border-t border-white/10 bg-transparent px-4 sm:px-6">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} دکه ابوعلی. تمام حقوق محفوظ است.
+          </p>
+        </footer>
+      </div>
+    </div>
   );
 }
