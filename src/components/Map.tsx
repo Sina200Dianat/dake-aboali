@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -16,47 +16,22 @@ const icon = L.icon({
   shadowSize: [41, 41]
 });
 
+
 const position: L.LatLngExpression = [29.6393, 52.5155]; // Shiraz, Mosalla Nezhad St
 
 const Map = () => {
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  // Use a ref to hold the map instance. This is crucial.
-  const mapRef = useRef<L.Map | null>(null);
-
-  useEffect(() => {
-    // Check if the map container is available and if the map has NOT been initialized yet.
-    if (mapContainerRef.current && !mapRef.current) {
-      // Create the map instance and store it in the ref
-      const map = L.map(mapContainerRef.current, {
-        center: position,
-        zoom: 16,
-        scrollWheelZoom: false,
-      });
-      mapRef.current = map;
-
-      // Add the tile layer
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
-
-      // Add the marker with the corrected icon
-      L.marker(position, { icon }).addTo(map)
-        .bindPopup('دکه ابوعلی <br /> خیابان مصلی نژاد');
-    }
-
-    // The cleanup function is the most important part for fixing this bug.
-    // It will be called when the component is unmounted.
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.remove(); // This properly destroys the Leaflet map instance
-        mapRef.current = null;  // Clear the ref
-      }
-    };
-  }, []); // The empty dependency array ensures this runs only once on mount and cleans up on unmount.
-
-  // The div that will contain the map.
   return (
-    <div ref={mapContainerRef} style={{ height: '100%', width: '100%' }} />
+    <MapContainer center={position} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <Marker position={position} icon={icon}>
+        <Popup>
+          دکه ابوعلی <br /> اینجا منتظرتونیم!
+        </Popup>
+      </Marker>
+    </MapContainer>
   );
 };
 
