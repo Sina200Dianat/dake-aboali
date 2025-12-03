@@ -1,8 +1,8 @@
 'use client';
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { useEffect, useRef } from 'react';
 
 // This is to fix the default icon issue with webpack
 // by explicitly setting the path to the images that Next.js will serve from the public directory.
@@ -16,23 +16,38 @@ const icon = L.icon({
   shadowSize: [41, 41]
 });
 
-
-const position: L.LatLngExpression = [29.6393, 52.5155]; // Shiraz, Mosalla Nezhad St
+const position: L.LatLngExpression = [29.6280, 52.5290]; // Shiraz, Afif-Abad Garden area
 
 const Map = () => {
-  return (
-    <MapContainer center={position} zoom={16} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={position} icon={icon}>
-        <Popup>
-          دکه ابوعلی <br /> اینجا منتظرتونیم!
-        </Popup>
-      </Marker>
-    </MapContainer>
-  );
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
+
+  useEffect(() => {
+    // Only initialize the map if the container ref is available and a map instance doesn't already exist.
+    if (mapContainerRef.current && !mapInstanceRef.current) {
+      const map = L.map(mapContainerRef.current).setView(position, 16);
+      mapInstanceRef.current = map; // Store the map instance
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      L.marker(position, { icon }).addTo(map)
+        .bindPopup('دکه ابوعلی <br /> اینجا منتظرتونیم!')
+        .openPopup();
+    }
+
+    // Cleanup function to run when the component is unmounted
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []); // Empty dependency array ensures this effect runs only once on mount.
+
+  // The div that will contain the map.
+  return <div ref={mapContainerRef} style={{ height: '100%', width: '100%' }} />;
 };
 
 export default Map;
