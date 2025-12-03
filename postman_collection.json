@@ -1,0 +1,942 @@
+{
+  "info": {
+    "name": "کافه - پروژه لاراول",
+    "description": "مجموعه API‌های پنل مدیریت و API عمومی برای کافه",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "احراز هویت (Auth)",
+      "item": [
+        {
+          "name": "ورود ادمین",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "admin@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "password",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "login"
+              ]
+            },
+            "description": "ورود به پنل مدیریت با ایمیل و رمز عبور"
+          }
+        },
+        {
+          "name": "خروج ادمین",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/admin/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "logout"
+              ]
+            },
+            "description": "خروج از پنل مدیریت"
+          }
+        }
+      ]
+    },
+    {
+      "name": "آیتم‌های منو (Menu Items)",
+      "item": [
+        {
+          "name": "دریافت تمام آیتم‌ها (API)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/menu-items",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "menu-items"
+              ]
+            },
+            "description": "دریافت تمام آیتم‌های منو فعال"
+          }
+        },
+        {
+          "name": "لیست آیتم‌ها (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/menu-items",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "menu-items"
+              ]
+            },
+            "description": "نمایش لیست تمام آیتم‌ها (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "ایجاد آیتم جدید (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "قهوه اسپرسو",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "قهوه تازه و خوشمزه",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "25000",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "قهوه",
+                  "type": "text"
+                },
+                {
+                  "key": "is_active",
+                  "value": "1",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/menu-items",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "menu-items"
+              ]
+            },
+            "description": "ایجاد آیتم منو جدید (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "ویرایش آیتم (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "قهوه اسپرسو - ویرایش شده",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "قهوه تازه و خوشمزه - بهتر شده",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "27000",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "قهوه",
+                  "type": "text"
+                },
+                {
+                  "key": "is_active",
+                  "value": "1",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/menu-items/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "menu-items",
+                "1"
+              ]
+            },
+            "description": "ویرایش آیتم منو (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        },
+        {
+          "name": "حذف آیتم (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/menu-items/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "menu-items",
+                "1"
+              ]
+            },
+            "description": "حذف آیتم منو (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        }
+      ]
+    },
+    {
+      "name": "موزیک (Music)",
+      "item": [
+        {
+          "name": "دریافت تمام موزیک‌ها (API)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/musics",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "musics"
+              ]
+            },
+            "description": "دریافت تمام موزیک‌های فعال با لینک‌های قابل دریافت"
+          }
+        },
+        {
+          "name": "لیست موزیک‌ها (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/musics",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "musics"
+              ]
+            },
+            "description": "نمایش لیست تمام موزیک‌ها (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "بارگذاری موزیک جدید (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "موزیک محلی",
+                  "type": "text"
+                },
+                {
+                  "key": "artist",
+                  "value": "هنرمند ایرانی",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "cover_image",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "is_active",
+                  "value": "1",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/musics",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "musics"
+              ]
+            },
+            "description": "بارگذاری موزیک جدید با فایل‌های صوتی و کاور (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "ویرایش موزیک (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "_method",
+                  "value": "PUT",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "موزیک محلی - ویرایش شده",
+                  "type": "text"
+                },
+                {
+                  "key": "artist",
+                  "value": "هنرمند ایرانی",
+                  "type": "text"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "cover_image",
+                  "type": "file",
+                  "src": []
+                },
+                {
+                  "key": "is_active",
+                  "value": "1",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/musics/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "musics",
+                "1"
+              ]
+            },
+            "description": "ویرایش موزیک (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        },
+        {
+          "name": "حذف موزیک (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/musics/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "musics",
+                "1"
+              ]
+            },
+            "description": "حذف موزیک (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        }
+      ]
+    },
+    {
+      "name": "درباره ما (About)",
+      "item": [
+        {
+          "name": "دریافت اطلاعات درباره ما (API)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/about",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "about"
+              ]
+            },
+            "description": "دریافت اطلاعات درباره کافه"
+          }
+        },
+        {
+          "name": "ویرایش درباره ما (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/about/edit",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "about",
+                "edit"
+              ]
+            },
+            "description": "صفحه ویرایش درباره ما (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "بروزرسانی درباره ما (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "header_text",
+                  "value": "خوش‌آمدید به کافه ما",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "ما یک کافه کوچک و دنج هستیم که بهترین قهوه و محیط دوستانه را فراهم می‌کنیم.",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/about",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "about"
+              ]
+            },
+            "description": "بروزرسانی اطلاعات درباره کافه (نیاز به احراز هویت)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "شبکه‌های اجتماعی (Social Links)",
+      "item": [
+        {
+          "name": "لیست شبکه‌های اجتماعی (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/social-links",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "social-links"
+              ]
+            },
+            "description": "نمایش لیست شبکه‌های اجتماعی (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "ایجاد لینک اجتماعی (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "platform",
+                  "value": "Instagram",
+                  "type": "text"
+                },
+                {
+                  "key": "url",
+                  "value": "https://instagram.com/cafe",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/social-links",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "social-links"
+              ]
+            },
+            "description": "ایجاد لینک شبکه اجتماعی جدید (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "ویرایش لینک اجتماعی (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "platform",
+                  "value": "Instagram",
+                  "type": "text"
+                },
+                {
+                  "key": "url",
+                  "value": "https://instagram.com/our_cafe",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/social-links/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "social-links",
+                "1"
+              ]
+            },
+            "description": "ویرایش لینک شبکه اجتماعی (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        },
+        {
+          "name": "حذف لینک اجتماعی (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/social-links/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "social-links",
+                "1"
+              ]
+            },
+            "description": "حذف لینک شبکه اجتماعی (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        }
+      ]
+    },
+    {
+      "name": "دل‌نوشته‌ها (Notes / Guestbook)",
+      "item": [
+        {
+          "name": "دریافت دل‌نوشته‌های تایید شده (API)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8000/api/notes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "notes"
+              ]
+            },
+            "description": "دریافت تمام دل‌نوشته‌های تایید شده"
+          }
+        },
+        {
+          "name": "ثبت دل‌نوشته جدید (API)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "first_name",
+                  "value": "علی",
+                  "type": "text"
+                },
+                {
+                  "key": "last_name",
+                  "value": "محمدی",
+                  "type": "text"
+                },
+                {
+                  "key": "message",
+                  "value": "قهوه‌های خیلی خوشمزه‌ای دارید! محیط هم خیلی دنج و خوشایند است.",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/api/notes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "api",
+                "notes"
+              ]
+            },
+            "description": "ثبت دل‌نوشته جدید (برای مهمانان)"
+          }
+        },
+        {
+          "name": "لیست دل‌نوشته‌ها (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/notes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "notes"
+              ]
+            },
+            "description": "نمایش لیست تمام دل‌نوشته‌ها (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "ایجاد دل‌نوشته (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "first_name",
+                  "value": "فاطمه",
+                  "type": "text"
+                },
+                {
+                  "key": "last_name",
+                  "value": "احمدی",
+                  "type": "text"
+                },
+                {
+                  "key": "message",
+                  "value": "دل‌نوشته از طرف مدیریت کافه",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "approved",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/notes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "notes"
+              ]
+            },
+            "description": "ایجاد دل‌نوشته جدید (نیاز به احراز هویت)"
+          }
+        },
+        {
+          "name": "مشاهده دل‌نوشته (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/notes/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "notes",
+                "1"
+              ]
+            },
+            "description": "نمایش جزئیات دل‌نوشته (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        },
+        {
+          "name": "ویرایش دل‌نوشته (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "first_name",
+                  "value": "فاطمه",
+                  "type": "text"
+                },
+                {
+                  "key": "last_name",
+                  "value": "احمدی",
+                  "type": "text"
+                },
+                {
+                  "key": "message",
+                  "value": "دل‌نوشته ویرایش شده",
+                  "type": "text"
+                },
+                {
+                  "key": "status",
+                  "value": "approved",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8000/admin/notes/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "notes",
+                "1"
+              ]
+            },
+            "description": "ویرایش دل‌نوشته (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        },
+        {
+          "name": "تایید دل‌نوشته (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/notes/1/approve",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "notes",
+                "1",
+                "approve"
+              ]
+            },
+            "description": "تایید دل‌نوشته (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        },
+        {
+          "name": "رد دل‌نوشته (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/notes/1/reject",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "notes",
+                "1",
+                "reject"
+              ]
+            },
+            "description": "رد دل‌نوشته (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        },
+        {
+          "name": "حذف دل‌نوشته (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8000/admin/notes/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8000",
+              "path": [
+                "admin",
+                "notes",
+                "1"
+              ]
+            },
+            "description": "حذف دل‌نوشته (نیاز به احراز هویت) - ID را تغییر دهید"
+          }
+        }
+      ]
+    }
+  ]
+}

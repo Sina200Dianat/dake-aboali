@@ -1,0 +1,49 @@
+/* Responsive admin panel styles */
+* {box-sizing: border-box}
+body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; padding:0; background:#f5f6f8; color:#222}
+.admin-wrap{display:flex; flex-direction:column; min-height:100vh}
+.admin-sidebar{width:100%; background:#1f2937; color:#fff; padding:16px; display:flex; flex-direction:column}
+.admin-sidebar h3{margin:0 0 12px 0; font-size:18px}
+.admin-sidebar a{color:#cbd5e1; text-decoration:none; display:block; padding:8px 0; font-size:14px}
+.admin-sidebar a:hover{color:#fff}
+.admin-sidebar form{margin-top:12px}
+.admin-main{flex:1; padding:16px}
+.topbar{display:flex; flex-direction:column; gap:12px; margin-bottom:20px}
+.topbar h2{margin:0; font-size:22px}
+.topbar .muted{font-size:13px}
+.card{background:#fff; padding:16px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.04)}
+table{width:100%; border-collapse:collapse; font-size:14px}
+th,td{padding:8px; border-bottom:1px solid #e6e9ef; text-align:left}
+.btn{display:inline-block; padding:8px 12px; background:#2563eb; color:#fff; border-radius:4px; text-decoration:none; border:none; cursor:pointer; font-size:14px; white-space:nowrap}
+.btn:hover{background:#1d4ed8}
+.btn.danger{background:#ef4444}
+.btn.danger:hover{background:#dc2626}
+.form-group{margin-bottom:16px}
+label{display:block; margin-bottom:6px; font-weight:500; font-size:14px}
+input[type=text], input[type=email], input[type=number], textarea, select{width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:4px; font-family:inherit; font-size:14px}
+input[type=text]:focus, input[type=email]:focus, input[type=number]:focus, textarea:focus, select:focus{outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+.muted{color:#6b7280; font-size:13px}
+.flash{padding:12px; background:#ecfdf5; border:1px solid #bbf7d0; margin-bottom:12px; border-radius:4px}
+.error{color:#dc2626; font-size:13px; margin-top:4px}
+p a.btn{display:inline-block; margin-bottom:12px}
+div > .btn{margin-right:8px; margin-bottom:8px}
+
+/* Tablet: 640px and up */
+@media (min-width:640px) {
+  .admin-wrap{flex-direction:row}
+  .admin-sidebar{width:240px; padding:20px; flex-direction:column; flex-shrink:0; max-height:100vh; overflow-y:auto}
+  .admin-main{padding:20px}
+  .topbar{flex-direction:row; justify-content:space-between; align-items:center}
+  table{font-size:15px}
+  th,td{padding:10px 12px}
+}
+
+/* Desktop: 1024px and up */
+@media (min-width:1024px) {
+  .admin-sidebar{width:260px}
+  .admin-main{padding:24px}
+  .card{padding:20px}
+  .topbar h2{font-size:24px}
+  table{font-size:16px}
+  th,td{padding:12px 14px}
+}
