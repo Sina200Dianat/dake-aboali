@@ -1,3 +1,4 @@
+
 'use client';
 
 import 'leaflet/dist/leaflet.css';
@@ -5,7 +6,6 @@ import L from 'leaflet';
 import { useEffect, useRef } from 'react';
 
 // This is to fix the default icon issue with webpack
-// by explicitly setting the path to the images that Next.js will serve from the public directory.
 const icon = L.icon({
   iconUrl: '/images/marker-icon.png',
   iconRetinaUrl: '/images/marker-icon-2x.png',
@@ -16,7 +16,7 @@ const icon = L.icon({
   shadowSize: [41, 41]
 });
 
-const position: L.LatLngExpression = [29.6280, 52.5290]; // Shiraz, Afif-Abad Garden area
+const position: L.LatLngExpression = [29.62362449411336, 52.49681712854327]; // Dakeh Aboali Location
 
 const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -51,3 +51,4 @@ const Map = () => {
 };
 
 export default Map;
+
